@@ -3,6 +3,7 @@ import { configDotenv } from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';    
 import connectDB from './utils/db.js';
+import userRoutes from './routes/user.route.js';
 
 configDotenv();
 const app = express();
@@ -19,12 +20,8 @@ const corsOption = {
 }
 app.use(cors(corsOption));
 
-app.get('/', async(req, res) => {
-    return res.status(200).json({
-        message: "I am here ",
-        success: true
-    });
-});
+// api's 
+app.use('/api/v1/user', userRoutes);
 
 app.listen(PORT, () => {
     connectDB();
