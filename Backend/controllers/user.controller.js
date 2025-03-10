@@ -23,6 +23,16 @@ export const register = async (req, res) => {
       });
     }
 
+    const checkPhoneNumber = await User.findOne({phoneNumber});
+    
+    // checking if user with same phone number exists in the db
+    if(checkPhoneNumber){
+      return res.status(400).json({
+        message: "Phone number already exists",
+        success: false
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
@@ -104,7 +114,7 @@ export const login = async (req, res) => {
     return res
       .status(200)
       .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,
+        maxAge: 1 * 24 * 60 * 60 * 1000,  // 1 day
         httpsOnly: true,
         sameSite: "strict",
       })
@@ -142,9 +152,9 @@ export const updateProfile = async (req, res) => {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
 
-    const userId = req.id;
+    const userId = req.id;    // id is coming from authmiddleware
     let user = await User.findById(userId);
-
+    
     if (!user) {
       return res.status(400).json({
         message: "No user found with given id",
