@@ -90,13 +90,43 @@ export const getCompanyById = async (req, res) => {
     }
 }
 
-export const updateCompany = async (req,res) => {
+export const updateCompany = async (req, res) => {
     try {
+        const { name, location, description, website } = req.body;
+        const updateData = { name, location, description, website };
+
+        const company = await Company.findById(req.params.id);
+        if (!company) {
+            return res.status(404).json({
+                message: "No company found",
+                success: false
+            });
+        }
+        
+        // checking if the unauthorized owner is updating company details
+        if (company.userId.toString() !== req.id.toString()) {
+            return res.status(403).json({
+                message: "Unauthorized: Only the owner can update company details",
+                success: false
+            });
+        }        
+
+        const updatedCompany = await Company.findByIdAndUpdate(
+            req.params.id,
+            updateData,
+            { new: true, runValidators: true }
+        );
+
+        return res.status(200).json({
+            message: "Company data updated successfully",
+            success: true,
+            company: updatedCompany
+        });
 
     } catch (error) {
         return res.status(500).json({
             message: "Internal server error, " + error.message,
-            success: false,
+            success: false
         });
-    }    
-}
+    }
+};
