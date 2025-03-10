@@ -1,4 +1,4 @@
-import Company from "../models/company.model.js";
+import Company from '../models/company.model.js';
 
 export const registerCompany = async (req,res) => {
     try {
@@ -66,6 +66,21 @@ export const getCompanies = async (req, res) => {
 
 export const getCompanyById = async (req, res) => {
     try {
+        const companyId = req.params.id;
+        const company = await Company.findById(companyId);
+
+        if(!company){
+            return res.status(404).json({
+                message: "No company found with given id",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "company found",
+            success: true,
+            company
+        });
 
     } catch (error) {
         return res.status(500).json({
