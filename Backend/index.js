@@ -5,6 +5,8 @@ import cors from 'cors';
 import connectDB from './utils/db.js';
 import userRoutes from './routes/user.route.js';
 import companyRoutes from './routes/company.route.js';
+import jobRoutes from './routes/job.route.js';
+
 
 configDotenv();
 const app = express();
@@ -24,6 +26,8 @@ app.use(cors(corsOption));
 // api's 
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/company', companyRoutes);
+app.use('/api/v1/job', jobRoutes);
+
 
 app.listen(PORT, () => {
     connectDB();

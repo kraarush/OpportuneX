@@ -103,7 +103,7 @@ export const updateCompany = async (req, res) => {
             });
         }
         
-        // checking if the unauthorized owner is updating company details
+        // checking if the unauthorized recuiter is updating company details
         if (company.userId.toString() !== req.id.toString()) {
             return res.status(403).json({
                 message: "Unauthorized: Only the owner can update company details",
