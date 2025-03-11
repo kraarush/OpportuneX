@@ -1,6 +1,8 @@
 import Company from "../models/company.model.js";
 import Job from "../models/job.model.js";
 
+
+// for admin
 export const createJob = async (req, res) => {
     try {
         const { title, description, salary, location, requirements, experience, jobType, position, companyId } = req.body;
@@ -56,7 +58,7 @@ export const createJob = async (req, res) => {
     }
 }
 
-
+// for students
 export const getAllJobs = async(req, res) => {
     try {
         const keyword = req.query.keyword || "";
@@ -67,7 +69,11 @@ export const getAllJobs = async(req, res) => {
             ]
         };
 
-        const jobs = await Job.find(query);
+        console.log("here, "+ query);
+
+        const jobs = await Job.find(query).populate({
+            path: "company"
+        }).sort({createdAt: -1});
 
         if(jobs.length === 0){
             return res.status(404).json({
@@ -89,6 +95,7 @@ export const getAllJobs = async(req, res) => {
     }
 }
 
+// for students
 export const getJobById = async (req, res) => {
     try {
         const jobId = req.params.id;
@@ -117,6 +124,31 @@ export const getJobById = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             message: "Internal server error fetching job with id, " + error.message,
+            success: false
+        });
+    }
+}
+
+
+// for admin
+export const getAdminJobs = async (req, res) => {
+    try {
+        const userId = req.id;
+
+        const job = await Job.find({created_by: userId});
+
+        if(job.length === 0){
+            return res.status(404).json({
+                message: "No jobs found",
+                success: false,
+            });
+        }
+
+        return res.status(200).json({job, success: true});
+        
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal server error fetching jobs for admin, " + error.message,
             success: false
         });
     }

@@ -1,13 +1,17 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authmiddleware.js';
 import { authorizeRole } from '../middlewares/authorizeRole.js';
-import { createJob, getAllJobs, getJobById } from '../controllers/job.controller.js';
+import { createJob, getAdminJobs, getAllJobs, getJobById } from '../controllers/job.controller.js';
 
 const router = express.Router();
 
+// for admins
 router.route('/create').post(authMiddleware, authorizeRole("recruiter"), createJob);
-router.route('/getAllJobs').get(authMiddleware, getAllJobs);
-router.route('/getJobById/:id').get(authMiddleware, getJobById);
+router.route('/getAdminJobs').get(authMiddleware, authorizeRole("recruiter"), getAdminJobs);
+
+// for students
+router.route('/get').get(authMiddleware, getAllJobs);
+router.route('/get/:id').get(authMiddleware, getJobById);
 
 
 
