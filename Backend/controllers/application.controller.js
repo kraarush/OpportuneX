@@ -144,7 +144,6 @@ export const updateStatus = async (req, res) => {               // admin
             message: "Status updated Successfully.",
             success: true,
         });
-
     } 
     catch (error) {
         return res.status(500).json({
