@@ -92,7 +92,7 @@ export const getAppliedJobs = async (req, res) => {             // student
 export const getApplicants = async (req, res) => {              // admin
     try {
         const jobId = req.params.id;
-        
+
         const totalApplicants = await Job.findById(jobId).populate({
             path: 'applications',
             options: {sort : {createdAt: -1}},
@@ -125,8 +125,28 @@ export const getApplicants = async (req, res) => {              // admin
 
 export const updateStatus = async (req, res) => {               // admin
     try {
+        const { status } = req.body;            // getting the status pf application by admin (accepted/rejected)
+        const applicationId = req.params.id;
 
-    } catch (error) {
+        const application = await Application.findById(applicationId);
+
+        if(!application){
+            return res.status(404).json({
+                message: "Application not found",
+                success: false,
+            });
+        }
+
+        application.status = status.toLowerCase();
+        await application.save();
+
+        return res.status(200).json({
+            message: "Status updated Successfully.",
+            success: true,
+        });
+
+    } 
+    catch (error) {
         return res.status(500).json({
             message: "Internal server error updating status of applicant, " + error.message,
             success: false,
