@@ -1,6 +1,6 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authmiddleware.js';
-import { authorizeRole } from '../middlewares/authorizeRole.js';
+import authorizeRole from '../middlewares/authorizeRole.js';
 import { createJob, getAdminJobs, getAllJobs, getJobById } from '../controllers/job.controller.js';
 
 const router = express.Router();
