@@ -54,7 +54,8 @@ export const applyJob = async (req, res) => {               // student
     }
 }
 
-// can be more secured by not sending the populated results to the user with sensitve data -- will work on that later
+// can be more secured by not sending the populated jobs to the user with sensitve data -- will work on that later
+
 export const getAppliedJobs = async (req, res) => {             // student
     try {
         const userId = req.id;
@@ -90,7 +91,29 @@ export const getAppliedJobs = async (req, res) => {             // student
 
 export const getApplicants = async (req, res) => {              // admin
     try {
+        const jobId = req.params.id;
         
+        const totalApplicants = await Job.findById(jobId).populate({
+            path: 'applications',
+            options: {sort : {createdAt: -1}},
+            populate: {
+                path: 'applicant',
+                options: {sort : {createdAt: -1}},
+            }
+        }).sort({createdAt: -1});
+
+        if(totalApplicants.length === 0){
+            return res.status(404).json({
+                message: "No applicants found for this job",
+                success : false,
+            });
+        }
+
+        return res.status(200).json({
+            totalApplicants,
+            success: true,
+        });
+
     } catch (error) {
         return res.status(500).json({
             message: "Internal server error getting applicants, " + error.message,
