@@ -31,10 +31,14 @@ export const applyJob = async (req, res) => {
             });
         }
 
-        await Application.create({
+        const newApplication = await Application.create({
             job: jobId,
             applicant: userId
         });
+
+        // pushing the new applications into the applications array of the job model
+        job.applications.push(newApplication._id);
+        await job.save();
 
         return res.status(201).json({
             message: "Application applied successfully",
