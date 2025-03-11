@@ -5,10 +5,11 @@ import { applyJob, getApplicants, getAppliedJobs, updateStatus } from '../contro
 
 const router = express.Router();
 
+
 router.route('/apply/:id').get(authMiddleware, authorizeRole("student"), applyJob);
 router.route('/get').get(authMiddleware, authorizeRole("student"), getAppliedJobs);
 router.route('/applicants/:id').get(authMiddleware, authorizeRole("recruiter"), getApplicants);
-router.route('/updateStatus/:id').post(authMiddleware, authorizeRole("recruiter"), updateStatus);
+router.route('/status/update/:id').post(authMiddleware, authorizeRole("recruiter"), updateStatus);
 
 
 export default router;

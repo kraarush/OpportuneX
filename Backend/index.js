@@ -18,6 +18,8 @@ const PORT = process.env.BACKEND_PORT;
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cookieParser());
+
+// cors setup
 const corsOption = {
     origin: 'http://localhost:5173',
     credentials:true
