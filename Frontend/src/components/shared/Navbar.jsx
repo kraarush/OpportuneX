@@ -1,18 +1,14 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import React from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="bg-white border-b">
+    <div className="bg-white border-b border-gray-300   ">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
         {/* Left part */}
         <div>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-3xl font-bold">
             Opportune<span className="text-[#F83002]">X</span>
           </h1>
         </div>
@@ -20,9 +16,15 @@ const Navbar = () => {
         {/* Right part */}
         <div className="flex items-center gap-6">
           <ul className="flex font-medium items-center gap-5">
-            <li className="cursor-pointer hover:text-gray-600">Home</li>
-            <li className="cursor-pointer hover:text-gray-600">Jobs</li>
-            <li className="cursor-pointer hover:text-gray-600">Browse</li>
+            <li>
+              <Link to="/" className="cursor-pointer hover:text-gray-600">Home</Link>
+            </li>
+            <li>
+              <Link to="/jobs" className="cursor-pointer hover:text-gray-600">Jobs</Link>
+            </li>
+            <li>
+              <Link to="/browse" className="cursor-pointer hover:text-gray-600">Browse</Link>
+            </li>
           </ul>
 
           <Popover>
