@@ -1,13 +1,10 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { LogOut, User } from "lucide-react";
+
 
 const Navbar = () => {
   const [loggedIn, isLoggedIn] = useState(false);
@@ -17,14 +14,14 @@ const Navbar = () => {
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
         {/* Left part */}
         <div>
-          <h1 className="text-3xl font-bold">
+          <h1 className="md:text-4xl sm:text-2xl text-xl font-bold">
             Opportune<span className="text-[#F83002]">X</span>
           </h1>
         </div>
 
         {/* Right part */}
         <div className="flex items-center gap-6">
-          <ul className="flex font-semibold gap-5">
+          <ul className="flex font-semibold gap-5 md:text-lg">
             <li>
               <Link to="/" className="cursor-pointer hover:text-gray-600">
                 Home
@@ -45,9 +42,12 @@ const Navbar = () => {
           {
             !loggedIn ? 
             <div className="flex gap-4">
-              <Button variant="outline">Sign Up</Button>
-              <Button className="bg-[#6A38C2] hover:bg-[#885bd7]">Login</Button>
-            </div> : 
+              <Link to="/signup" ><Button variant="outline" className="border-[#6A38C2] hover:text-[#331c5b] ">Sign Up</Button></Link>
+              <Link to="/login"><Button className="bg-[#6A38C2] hover:bg-[#885bd7] hover:text-black">Login</Button></Link>
+            </div> 
+            
+            : 
+            
             <Popover>
             <PopoverTrigger asChild>
               <Avatar className="w-10 h-10 cursor-pointer rounded-full border border-gray-300">
@@ -61,7 +61,7 @@ const Navbar = () => {
             <PopoverContent className="flex mx-2 flex-col items-center w-[22rem]">
               <div className="flex gap-6 items-center">
                 <div className="flex mr-2">
-                  <Avatar className="w-14 h-14 cursor-pointer rounded-full border border-gray-300">
+                  <Avatar className="w-14 h-14 rounded-full border border-gray-300">
                     <AvatarImage
                       src="https://github.com/shadcn.png"
                       alt="@shadcn"
@@ -81,13 +81,13 @@ const Navbar = () => {
               <div className="flex flex-col m-4 w-full text-gray-600">
                 <div className="flex items-center justify-start w-full">
                   <User size={30}/>
-                  <Button variant="link" className="text-lg px-6 py-2 text-gray-600">
+                  <Button variant="link" className="text-lg px-6 py-2 text-gray-600" tabIndex={-1}>
                     Profile 
                   </Button>
                 </div>
                 <div className="flex items-center justify-start w-full">
                   <LogOut size={30}/>
-                  <Button variant="link" className="text-lg px-6 py-2 text-gray-600">
+                  <Button variant="link" className="text-lg px-6 py-2 text-gray-600" tabIndex={-1}>
                     Logout
                   </Button>
                 </div>
@@ -98,7 +98,8 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-  );
+  )
 };
+
 
 export default Navbar;

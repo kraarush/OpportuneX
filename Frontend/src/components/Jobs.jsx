@@ -1,5 +1,5 @@
 import React from 'react'
-import Typed from './Typed'
+import Typed from './shared/Typed'
 
 const Jobs = () => {
   return (

@@ -1,18 +1,20 @@
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, RouterProvider, useRoutes } from "react-router-dom";
+import appRouter from "./components/routes/appRouter";
 import Navbar from "./components/shared/Navbar";
-import Home from "./components/shared/Home";
-import Jobs from "./components/shared/Jobs";
-import Browse from "./components/shared/Browse";
+import Footer from "./components/shared/Footer";
+
+const AppRoutes = () => {
+  return useRoutes(appRouter);
+};
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/jobs" element={<Jobs/>} />
-        <Route path="/browse" element={<Browse/>} />
-      </Routes>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex-grow overflow-auto">
+        <AppRoutes />
+      </div>
+      <Footer />
     </div>
   );
 }
