@@ -14,14 +14,12 @@ const Typed = () => {
         typeSpeed={100}
         backSpeed={90}
         attr="placeholder"
+        loop
       >
-        <input
-          type="text"
-          className="py-4 text-center w-full"
-        />
+      <input type="text" className="py-4 text-center w-full" />
       </ReactTyped>
     </div>
-  );
+  );  
 };
 
-export default Typed;
+export default Typed; 
