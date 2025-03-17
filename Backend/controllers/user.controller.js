@@ -56,96 +56,180 @@ export const register = async (req, res) => {
   }
 };
 
+// export const login = async (req, res) => {
+//   try {
+//     const { email, password, role } = req.body;
+
+//     if (!email || !password || !role) {
+//       return res.status(400).json({
+//         message: "some fields are missing",
+//         success: false,
+//       });
+//     }
+
+//     let user = await User.findOne({ email });   // find
+
+//     // checking if user exists with the given email
+//     if (!user) {
+//       return res.status(400).json({
+//         message: "Invalid email or password",
+//         success: false,
+//       });
+//     }
+
+//     // checking correct password
+//     const isPassword = await bcrypt.compare(password, user.password);
+//     if (!isPassword) {
+//       return res.status(400).json({
+//         message: "Invalid email or password",
+//         success: false,
+//       });
+//     }
+
+//     // checking for correct role
+//     if (role !== user.role) {
+//       return res.status(400).json({
+//         message: "Account with given role does not exists",
+//         success: false,
+//       });
+//     }
+
+//     const tokenData = {
+//       userId: user._id,
+//     };
+
+//     const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
+//       expiresIn: "1d",
+//     });
+
+//     user = {
+//       _id: user._id,
+//       fullname: user.fullname,
+//       email: user.email,
+//       phoneNumber: user.phoneNumber,
+//       role: user.role,
+//       profile: user.profile,
+//     };
+
+//     return res
+//       .status(200)
+//       .cookie("token", token, {
+//         maxAge: 1 * 24 * 60 * 60 * 1000,  // 1 day
+//         httpsOnly: true,
+//         sameSite: "strict",
+//       })
+//       .json({
+//         message: `welcome back, ${user.fullname}`,
+//         user,
+//         success: true,
+//       });
+
+
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({
+//       message: "Internal server error in logging in account, " + error,
+//       success: false,
+//     });
+//   }
+// };
+
 export const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
 
     if (!email || !password || !role) {
       return res.status(400).json({
-        message: "some fields are missing",
+        message: 'Some fields are missing',
         success: false,
       });
     }
 
     let user = await User.findOne({ email });
 
-    // checking if user exists with the given email
     if (!user) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message: 'Invalid email or password',
         success: false,
       });
     }
 
-    // checking correct password
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message: 'Invalid email or password',
         success: false,
       });
     }
 
-    // checking for correct role
     if (role !== user.role) {
       return res.status(400).json({
-        message: "Account with given role does not exists",
+        message: 'Account with given role does not exist',
         success: false,
       });
     }
 
     const tokenData = {
       userId: user._id,
+      role: user.role,
     };
 
     const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
-      expiresIn: "1d",
+      expiresIn: '1d',
     });
 
-    user = {
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
-    };
+    // Set separate cookie based on role
+    const cookieName = role === 'student' ? 'student_token' : 'recruiter_token';
 
-    return res
+    res
       .status(200)
-      .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,  // 1 day
-        httpsOnly: true,
-        sameSite: "strict",
+      .cookie(cookieName, token, {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: false,
+        sameSite: 'strict',
       })
       .json({
-        message: `welcome back, ${user.fullname}`,
-        user,
+        message: `Welcome back, ${user.fullname}`,
+        user: {
+          _id: user._id,
+          fullname: user.fullname,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          role: user.role,
+          profile: user.profile,
+        },
         success: true,
       });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Internal server error in logging in account, " + error,
+    console.error('Login Error:', error);
+    res.status(500).json({
+      message: `Internal server error: ${error.message}`,
       success: false,
     });
   }
 };
 
+
 export const logout = async (req, res) => {
   try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      message: "Logged out successfully",
-      success: true,
-    });
+    res
+      .status(200)
+      .cookie("student_token", "", { maxAge: 0 })
+      .cookie("recruiter_token", "", { maxAge: 0 })
+      .json({
+        message: "Logged out successfully",
+        success: true,
+      });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Internal server error in logging out, " + error,
+    console.error("Logout Error:", error);
+    res.status(500).json({
+      message: `Internal server error in logging out: ${error.message}`,
       success: false,
     });
   }
 };
+
 
 export const updateProfile = async (req, res) => {
   try {

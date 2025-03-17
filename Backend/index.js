@@ -1,5 +1,7 @@
 import express from 'express'
 import { configDotenv } from 'dotenv';
+
+
 import cookieParser from 'cookie-parser';
 import cors from 'cors';    
 import connectDB from './utils/db.js';
@@ -11,8 +13,7 @@ import applicationRoutes from './routes/application.route.js';
 
 configDotenv();
 const app = express();
-const PORT = process.env.BACKEND_PORT;
-
+const PORT = process.env.PORT || 3000;
 
 // middlewares
 app.use(express.json());
