@@ -10,7 +10,7 @@ const Navbar = () => {
   const [loggedIn, isLoggedIn] = useState(false);
 
   return (
-    <div className="bg-white border-b border-gray-300   ">
+    <div className="bg-white border-b border-gray-300  h-[8vh] ">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
         {/* Left part */}
         <div>
