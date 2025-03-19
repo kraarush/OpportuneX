@@ -21,7 +21,7 @@ const Navbar = () => {
 
         {/* Right part */}
         <div className="flex items-center gap-6">
-          <ul className="flex font-semibold gap-5 md:text-lg">
+          <ul className="flex font-semibold gap-5 md:text-lg mr-4">
             <li>
               <Link to="/" className="cursor-pointer hover:text-gray-600">
                 Home
@@ -37,7 +37,7 @@ const Navbar = () => {
                 Browse
               </Link>
             </li>
-          </ul>
+          </ul>   
 
           {
             !loggedIn ? 

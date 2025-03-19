@@ -56,84 +56,6 @@ export const register = async (req, res) => {
   }
 };
 
-// export const login = async (req, res) => {
-//   try {
-//     const { email, password, role } = req.body;
-
-//     if (!email || !password || !role) {
-//       return res.status(400).json({
-//         message: "some fields are missing",
-//         success: false,
-//       });
-//     }
-
-//     let user = await User.findOne({ email });   // find
-
-//     // checking if user exists with the given email
-//     if (!user) {
-//       return res.status(400).json({
-//         message: "Invalid email or password",
-//         success: false,
-//       });
-//     }
-
-//     // checking correct password
-//     const isPassword = await bcrypt.compare(password, user.password);
-//     if (!isPassword) {
-//       return res.status(400).json({
-//         message: "Invalid email or password",
-//         success: false,
-//       });
-//     }
-
-//     // checking for correct role
-//     if (role !== user.role) {
-//       return res.status(400).json({
-//         message: "Account with given role does not exists",
-//         success: false,
-//       });
-//     }
-
-//     const tokenData = {
-//       userId: user._id,
-//     };
-
-//     const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
-//       expiresIn: "1d",
-//     });
-
-//     user = {
-//       _id: user._id,
-//       fullname: user.fullname,
-//       email: user.email,
-//       phoneNumber: user.phoneNumber,
-//       role: user.role,
-//       profile: user.profile,
-//     };
-
-//     return res
-//       .status(200)
-//       .cookie("token", token, {
-//         maxAge: 1 * 24 * 60 * 60 * 1000,  // 1 day
-//         httpsOnly: true,
-//         sameSite: "strict",
-//       })
-//       .json({
-//         message: `welcome back, ${user.fullname}`,
-//         user,
-//         success: true,
-//       });
-
-
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       message: "Internal server error in logging in account, " + error,
-//       success: false,
-//     });
-//   }
-// };
-
 export const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
@@ -148,22 +70,22 @@ export const login = async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({
-        message: 'Invalid email or password',
+      return res.status(404).json({
+        message: 'Email does not exist',
         success: false,
       });
     }
 
     const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword) {
-      return res.status(400).json({
-        message: 'Invalid email or password',
+      return res.status(401).json({
+        message: 'Incorrect password',
         success: false,
       });
     }
 
     if (role !== user.role) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: 'Account with given role does not exist',
         success: false,
       });
@@ -178,7 +100,6 @@ export const login = async (req, res) => {
       expiresIn: '1d',
     });
 
-    // Set separate cookie based on role
     const cookieName = role === 'student' ? 'student_token' : 'recruiter_token';
 
     res

@@ -34,6 +34,50 @@ const Signup = () => {
     console.log(formData);    
   }
 
+  const validateForm = () => {
+    let newErrors = { ...errors };
+  
+    if (!formData.email) newErrors.email = "Email is required";
+    else if (!formData.email.includes("@")) newErrors.email = "Invalid email format";
+    else newErrors.email = "";
+  
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else {
+      const errors = [];
+      
+      if (formData.password.length < 8) {
+        errors.push("at least 8 characters");
+      }
+      if (!/[A-Z]/.test(formData.password)) {
+        errors.push("one uppercase letter");
+      }
+      if (!/[a-z]/.test(formData.password)) {
+        errors.push("one lowercase letter");
+      }
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
+        errors.push("one special character");
+      }
+    
+      if (errors.length) {
+        newErrors.password = `Password must contain ${errors.join(", ")}`;
+      } else {
+        newErrors.password = "";
+      }
+    }
+    
+    if (!formData.role) newErrors.role = "Role is required";
+    else newErrors.role = "";
+  
+    setErrors(newErrors);
+  
+    for (const key in newErrors) {
+      if (newErrors[key]) return false;
+    }
+  
+    return true;
+  };
+
   return (
     <div>
       <Navbar />
