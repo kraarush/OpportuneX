@@ -24,16 +24,6 @@ export const register = async (req, res) => {
       });
     }
 
-    const checkPhoneNumber = await User.findOne({phoneNumber});
-    
-    // checking if user with same phone number exists in the db
-    if(checkPhoneNumber){
-      return res.status(400).json({
-        message: "Phone number already exists",
-        success: false
-      });
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
@@ -59,6 +49,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    console.log("came here");
+    
     let { email, password, role } = req.body;
 
     email = validator.normalizeEmail(email?.trim() || "");
