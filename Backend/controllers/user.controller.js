@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import validator from 'validator';
 
 export const register = async (req, res) => {
   try {
@@ -58,11 +59,23 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    let { email, password, role } = req.body;
+
+    email = validator.normalizeEmail(email?.trim() || "");
+    password = password?.trim() || "";
+    role = role?.trim() || "";
 
     if (!email || !password || !role) {
       return res.status(400).json({
         message: 'Some fields are missing',
+        success: false,
+      });
+    }
+
+    // checking validity of email
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({
+        message: 'Invalid email format',
         success: false,
       });
     }
@@ -93,7 +106,6 @@ export const login = async (req, res) => {
 
     const tokenData = {
       userId: user._id,
-      role: user.role,
     };
 
     const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
