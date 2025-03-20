@@ -41,7 +41,7 @@ export const register = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Internal server error in Creating account, " + error,
+      message: "Internal server error in Creating account, " + error.message,
       success: false,
     });
   }
@@ -49,8 +49,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    console.log("came here");
-    
     let { email, password, role } = req.body;
 
     email = validator.normalizeEmail(email?.trim() || "");
@@ -105,6 +103,9 @@ export const login = async (req, res) => {
     });
 
     const cookieName = role === 'student' ? 'student_token' : 'recruiter_token';
+
+    res.clearCookie('student_token');
+    res.clearCookie('recruiter_token');
 
     res
       .status(200)
@@ -163,7 +164,7 @@ export const updateProfile = async (req, res) => {
 
     const userId = req.id;    // id is coming from authmiddleware
     let user = await User.findById(userId);
-    
+
     if (!user) {
       return res.status(400).json({
         message: "No user found with given id",
@@ -174,21 +175,21 @@ export const updateProfile = async (req, res) => {
     // checking if the user is updating to an already existing email
     let checkEmail = await User.findOne({ email });
     if (checkEmail && checkEmail._id.toString() !== userId) {
-        return res.status(400).json({
-            message: "Email already exists",
-            success: false,
-        });
+      return res.status(400).json({
+        message: "Email already exists",
+        success: false,
+      });
     }
 
     Object.assign(user, {
-        fullname: fullname || user.fullname,
-        email: email || user.email,
-        phoneNumber: phoneNumber || user.phoneNumber,
-        profile: {
-          ...user.profile,
-          bio: bio || user.profile.bio,
-          skills: skills ? skills.split(",") : user.profile.skills,
-        },
+      fullname: fullname || user.fullname,
+      email: email || user.email,
+      phoneNumber: phoneNumber || user.phoneNumber,
+      profile: {
+        ...user.profile,
+        bio: bio || user.profile.bio,
+        skills: skills ? skills.split(",") : user.profile.skills,
+      },
     });
 
     await user.save();
