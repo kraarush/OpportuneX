@@ -5,11 +5,17 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import axios from "axios";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL_LOCAL;
+  const [serverError, setServerError] = useState("");
+  const [serverSuccess, setServerSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -47,19 +53,37 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      setServerError("");
+      return;
+    }
 
-    console.log(formData);
+    try {
+      const res = await axios.post(`${backendUrl}/user/register`, formData);
+      if (res.data.success) {
+        setServerError("");
+        setServerSuccess(true);
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log("came here");
+      
+      console.log(error.response.data);
+      setServerError(error.response?.data?.message);
+    }
   };
 
   const validateForm = () => {
     let newErrors = { ...errors };
 
-    if (!formData.fullname) newErrors.fullname = "Name is required";
+    if (!formData.fullname.trim()) newErrors.fullname = "Name is required";
     else newErrors.fullname = "";
 
     if (!formData.email) newErrors.email = "Email is required";
-    else if (!formData.email.includes("@"))
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
       newErrors.email = "Invalid email format";
     else newErrors.email = "";
 
@@ -72,25 +96,25 @@ const Signup = () => {
       newErrors.password = "Password is required";
     } else {
       const errors = [];
-
-      if (formData.password.length < 8) {
-        errors.push("at least 8 characters");
-      }
-      if (!/[A-Z]/.test(formData.password)) {
-        errors.push("one uppercase letter");
-      }
-      if (!/[a-z]/.test(formData.password)) {
-        errors.push("one lowercase letter");
-      }
-      if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
+      if (formData.password.length < 8) errors.push("at least 8 characters");
+      if (!/[A-Z]/.test(formData.password)) errors.push("one uppercase letter");
+      if (!/[a-z]/.test(formData.password)) errors.push("one lowercase letter");
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password))
         errors.push("one special character");
-      }
 
       if (errors.length) {
         newErrors.password = `Password must contain ${errors.join(", ")}`;
       } else {
         newErrors.password = "";
       }
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    } else {
+      newErrors.confirmPassword = "";
     }
 
     if (!formData.role) newErrors.role = "Role is required";
@@ -113,10 +137,16 @@ const Signup = () => {
           <form
             onSubmit={handleSubmit}
             className="w-full p-4 mx-auto md:w-1/2 md:border md:border-gray-200 md:rounded-md md:p-6 my-10 "
+            noValidate
           >
             <h1 className="font-bold md:text-3xl sm:text-2xl text-xl mb-5">
               Sign up
             </h1>
+            {serverSuccess && (
+              <p className="text-green-500 md:text-2xl text-xl my-6 text-center">
+                Account created successfully!! Redirecting to login page
+              </p>
+            )}
             <div className="my-2">
               <Label>Full name</Label>
               <Input
@@ -240,11 +270,6 @@ const Signup = () => {
                     <Label htmlFor="r2">Recruiter</Label>
                   </div>
                 </RadioGroup>
-                {errors.role && (
-                  <p className="text-red-500 text-sm my-1 mx-2">
-                    {errors.role}
-                  </p>
-                )}
               </div>
 
               <div className="flex flex-col md:flex-row md:items-center gap-2">
@@ -258,6 +283,17 @@ const Signup = () => {
                 />
               </div>
             </div>
+            {errors.role && (
+              <p className="text-red-500 text-sm my-1 mt-[-20px] mb-4">
+                {errors.role}
+              </p>
+            )}
+
+            {serverError && (
+              <p className="text-red-500 my-2 mx-2 text-center">
+                {serverError}
+              </p>
+            )}
 
             <Button className="w-full " type="submit">
               Sign up
