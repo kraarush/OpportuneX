@@ -98,7 +98,7 @@ const Login = () => {
           </h1>
 
           <div className="my-4">
-            <Label>Email</Label>
+            <Label>Email<span className="text-red-500 ml-1">*</span></Label>
             <Input
               type="email"
               placeholder="user@gmail.com"
@@ -113,7 +113,7 @@ const Login = () => {
           </div>
 
           <div className="my-2">
-              <Label>Password</Label>
+              <Label>Password<span className="text-red-500 ml-1">*</span></Label>
               <div className="relative">
                 <Input
                   type={showPassword ? "text" : "password"}
@@ -138,7 +138,7 @@ const Login = () => {
             </div>
 
           <div className="flex flex-col md:flex-row md:items-center md:gap-3 my-4">
-            <Label>Role</Label>
+            <Label>Role<span className="text-red-500 ml-1">*</span></Label>
             <RadioGroup className="flex my-2 gap-4 border border-gray-200 px-3 rounded-lg">
               <div className="flex items-center space-x-2">
                 <Input
