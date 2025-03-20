@@ -8,10 +8,11 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
+import { BACKEND_URL } from "@/utils/apis";
+
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL_LOCAL;
   const [serverError, setServerError] = useState("");
   const [serverSuccess, setServerSuccess] = useState(false);
 
@@ -59,7 +60,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post(`${backendUrl}/user/register`, formData);
+      const res = await axios.post(`${BACKEND_URL}/user/register`, formData);
       if (res.data.success) {
         setServerError("");
         setServerSuccess(true);

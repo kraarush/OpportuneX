@@ -6,6 +6,7 @@ import Notfound from "@/components/shared/Notfound";
 import Home from "../Home";
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../Dashboard";
+import Logout from "../auth/Logout";
 
 const appRouter = createBrowserRouter([
     { path: "/", element: <Home /> },
@@ -14,6 +15,7 @@ const appRouter = createBrowserRouter([
     { path: "signup", element: <Signup /> },
     { path: "browse", element: <Browse /> },
     { path:"dashboard", element:<Dashboard/>},
+    { path:"logout", element:<Logout/>},
     { path: "*", element: <Notfound /> },
 ]);
 

@@ -8,10 +8,10 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
+import { BACKEND_URL } from "@/utils/apis";
 
 
 const Login = () => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL_LOCAL;
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
@@ -46,9 +46,9 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post(`${backendUrl}/user/login`, formData,{ withCredentials: true });   //  withCredentials is used for cookies
+      const res = await axios.post(`${BACKEND_URL}/user/login`, formData,{ withCredentials: true });   //  withCredentials is used for cookies
       if (res.data.success) setServerError("");
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.log(error.response);
       setServerError(error.response?.data?.message);
