@@ -70,7 +70,7 @@ const Signup = () => {
       }
     } catch (error) {
       console.log("came here");
-      
+
       console.log(error.response.data);
       setServerError(error.response?.data?.message);
     }
@@ -133,10 +133,10 @@ const Signup = () => {
     <div>
       <Navbar />
       <div>
-        <div className="flex items-center justify-center md:max-w-7xl mx-auto ">
+        <div className="flex items-center justify-center md:max-w-7xl max-w-sm mx-auto ">
           <form
             onSubmit={handleSubmit}
-            className="w-full p-4 mx-auto md:w-1/2 md:border md:border-gray-200 md:rounded-md md:p-6 my-10 "
+            className="p-4 mx-auto md:w-1/2 md:border md:border-gray-200 md:rounded-md md:p-6 my-10 "
             noValidate
           >
             <h1 className="font-bold md:text-3xl sm:text-2xl text-xl mb-5">
@@ -148,7 +148,9 @@ const Signup = () => {
               </p>
             )}
             <div className="my-2">
-              <Label>Full name<span className="text-red-500 ml-1">*</span></Label>
+              <Label>
+                Full name<span className="text-red-500 ml-1">*</span>
+              </Label>
               <Input
                 type="text"
                 placeholder="Aarush kumar"
@@ -164,7 +166,9 @@ const Signup = () => {
               )}
             </div>
             <div className="my-2">
-              <Label>Email<span className="text-red-500 ml-1">*</span></Label>
+              <Label>
+                Email<span className="text-red-500 ml-1">*</span>
+              </Label>
               <Input
                 type="email"
                 placeholder="user@gmail.com"
@@ -178,7 +182,9 @@ const Signup = () => {
               )}
             </div>
             <div className="my-2">
-              <Label>Phone number<span className="text-red-500 ml-1">*</span></Label>
+              <Label>
+                Phone number<span className="text-red-500 ml-1">*</span>
+              </Label>
               <Input
                 type="tel"
                 placeholder="+91 709...11"
@@ -194,7 +200,9 @@ const Signup = () => {
               )}
             </div>
             <div className="my-2">
-              <Label>Password<span className="text-red-500 ml-1">*</span></Label>
+              <Label>
+                Password<span className="text-red-500 ml-1">*</span>
+              </Label>
               <div className="relative">
                 <Input
                   type={showPassword ? "text" : "password"}
@@ -219,7 +227,9 @@ const Signup = () => {
             </div>
 
             <div className="my-2">
-              <Label>Confirm Password<span className="text-red-500 ml-1">*</span></Label>
+              <Label>
+                Confirm Password<span className="text-red-500 ml-1">*</span>
+              </Label>
               <div className="relative">
                 <Input
                   type={showPassword ? "text" : "password"}
@@ -245,7 +255,9 @@ const Signup = () => {
 
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between my-4 gap-4">
               <div className="flex flex-col md:flex-row md:items-center lg:justify-between md:gap-3">
-                <Label>Role<span className="text-red-500 ml-1">*</span></Label>
+                <Label>
+                  Role<span className="text-red-500 ml-1">*</span>
+                </Label>
                 <RadioGroup className="flex my-2 gap-4 border border-gray-200 px-3 rounded-lg">
                   <div className="flex items-center space-x-2">
                     <Input
