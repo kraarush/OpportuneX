@@ -5,13 +5,29 @@ import validator from 'validator';
 
 export const register = async (req, res) => {
   try {
-    const { fullname, email, phoneNumber, password, role } = req.body;
+
+    let { fullname, email, phoneNumber, password, role, file } = req.body;
+
+    fullname = fullname?.trim() || "";
+    email = validator.normalizeEmail(email?.trim() || "");
+    phoneNumber = /^[0-9]{10}$/.test(phoneNumber) ? phoneNumber : "";
+    password = password?.trim() || "";
 
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "some fields are missing",
         success: false,
       });
+    }
+
+    if (req.file) {
+      if (!req.file.mimetype.startsWith("image/")) {
+        return res.status(400).json({ message: "Invalid file type. Only image files are allowed." , success: false});
+      }
+  
+      if (req.file.size > 5 * 1024 * 1024) {  
+        return res.status(400).json({ message: "File size too large. Max allowed is 5MB.", success: false });
+      }
     }
 
     const user = await User.findOne({ email });
