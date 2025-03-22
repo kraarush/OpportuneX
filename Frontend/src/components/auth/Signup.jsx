@@ -6,17 +6,19 @@ import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import axios from "axios";
 import { BACKEND_URL } from "@/utils/apis";
-
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState("");
-  const [serverSuccess, setServerSuccess] = useState(false);
+  const { loading } = useSelector((store) => store.auth);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -55,25 +57,39 @@ const Signup = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      setServerError("");
       return;
     }
 
-    try {
-      const res = await axios.post(`${BACKEND_URL}/user/register`, formData);
-      if (res.data.success) {
-        setServerError("");
-        setServerSuccess(true);
+    const userData = new FormData();
+    userData.append("fullname", formData.fullname);
+    userData.append("email", formData.email);
+    userData.append("password", formData.password);
+    userData.append("phoneNumber", formData.phoneNumber);
+    userData.append("role", formData.role);
+    if (formData.file) {
+      userData.append("file", formData.file);
+    }
 
+    try {
+      dispatch(setLoading(true));
+      const res = await axios.post(`${BACKEND_URL}/user/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
         setTimeout(() => {
+          toast.success(res.data.message);
           navigate("/login");
-        }, 2500);
+        }, 2000);
       }
     } catch (error) {
-      console.log("came here");
-
       console.log(error.response.data);
-      setServerError(error.response?.data?.message);
+      toast.error(error.response?.data?.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -143,11 +159,6 @@ const Signup = () => {
             <h1 className="font-bold md:text-3xl sm:text-2xl text-xl mb-5">
               Sign up
             </h1>
-            {serverSuccess && (
-              <p className="text-green-500 md:text-2xl text-xl my-6 text-center">
-                Account created successfully!! Redirecting to login page
-              </p>
-            )}
             <div className="my-2">
               <Label>
                 Full name<span className="text-red-500 ml-1">*</span>
@@ -213,12 +224,14 @@ const Signup = () => {
                   value={formData.password}
                   className="placeholder:text-sm md:placeholder:text-base pr-10"
                 />
-                <div
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </div>
+                {formData.password && (
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </div>
+                )}
               </div>
               {errors.password && (
                 <p className="text-red-500 text-sm my-1 mx-2">
@@ -240,12 +253,14 @@ const Signup = () => {
                   value={formData.confirmPassword}
                   className="placeholder:text-sm md:placeholder:text-base pr-10"
                 />
-                <div
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </div>
+                {formData.confirmPassword && (
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </div>
+                )}
               </div>
               {errors.confirmPassword && (
                 <p className="text-red-500 text-sm my-1 mx-2">
@@ -302,15 +317,16 @@ const Signup = () => {
               </p>
             )}
 
-            {serverError && (
-              <p className="text-red-500 my-2 mx-2 text-center">
-                {serverError}
-              </p>
+            {loading ? (
+              <Button className="w-full my-2">
+                <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button className="w-full " type="submit">
+                Sign up
+              </Button>
             )}
-
-            <Button className="w-full " type="submit">
-              Sign up
-            </Button>
 
             <div className="text-sm pt-4">
               Already have an account ?{" "}

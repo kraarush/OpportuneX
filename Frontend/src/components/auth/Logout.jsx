@@ -11,7 +11,7 @@ const Logout = () => {
   useEffect(() => {
     const logout = async () => {
       try {
-        await axios.get(`${BACKEND_URL}/user/logout`);
+        await axios.get(`${BACKEND_URL}/user/logout`,{withCredentials: true});
         setMessage("You have been logged out successfully!!");
         setTimeout(() => {
           navigate("/");
@@ -22,7 +22,7 @@ const Logout = () => {
     };
 
     logout();
-  }, [navigate]);
+  }, []);
 
   return (
     <>

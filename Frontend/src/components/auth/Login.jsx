@@ -7,19 +7,21 @@ import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { BACKEND_URL } from "@/utils/apis";
-
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {loading} = useSelector((store) => store.auth);
 
-  
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const [formData, setFormData] = useState({
     email: "",
@@ -40,18 +42,31 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validateForm()) {
-      setServerError("");
       return;
     }
 
     try {
-      const res = await axios.post(`${BACKEND_URL}/user/login`, formData,{ withCredentials: true });   //  withCredentials is used for cookies
-      if (res.data.success) setServerError("");
-      navigate("/");
+      dispatch(setLoading(true));
+      const res = await axios.post(`${BACKEND_URL}/user/login`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
+        setTimeout(() => {
+          toast.success(res.data.message);
+          navigate("/");
+        }, 100);
+      }
     } catch (error) {
-      console.log(error.response);
-      setServerError(error.response?.data?.message);
+      console.log(error.response.data);
+      toast.error(error.response?.data?.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -98,7 +113,9 @@ const Login = () => {
           </h1>
 
           <div className="my-4">
-            <Label>Email<span className="text-red-500 ml-1">*</span></Label>
+            <Label>
+              Email<span className="text-red-500 ml-1">*</span>
+            </Label>
             <Input
               type="email"
               placeholder="user@gmail.com"
@@ -113,32 +130,38 @@ const Login = () => {
           </div>
 
           <div className="my-2">
-              <Label>Password<span className="text-red-500 ml-1">*</span></Label>
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  name="password"
-                  onChange={changeEventHandler}
-                  value={formData.password}
-                  className="placeholder:text-sm md:placeholder:text-base pr-10"
-                />
+            <Label>
+              Password<span className="text-red-500 ml-1">*</span>
+            </Label>
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                name="password"
+                onChange={changeEventHandler}
+                value={formData.password}
+                className="placeholder:text-sm md:placeholder:text-base pr-10"
+              />
+              {formData.password && (
                 <div
                   className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </div>
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm my-1 mx-2">
-                  {errors.password}
-                </p>
               )}
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm my-1 mx-2">
+                {errors.password}
+              </p>
+            )}
+          </div>
 
           <div className="flex flex-col md:flex-row md:items-center md:gap-3 my-4">
-            <Label>Role<span className="text-red-500 ml-1">*</span></Label>
+            <Label>
+              Role<span className="text-red-500 ml-1">*</span>
+            </Label>
             <RadioGroup className="flex my-2 gap-4 border border-gray-200 px-3 rounded-lg">
               <div className="flex items-center space-x-2">
                 <Input
@@ -168,13 +191,16 @@ const Login = () => {
             )}
           </div>
 
-          {serverError && (
-            <p className="text-red-500 text-sm my-1 mx-2">{serverError}</p>
+          {loading ? (
+            <Button className="w-full my-2">
+              <Loader2 className="mr-2 w-4 h-4 animate-spin"/>
+              Please wait
+            </Button>
+          ) : (
+            <Button className="w-full my-2" type="submit">
+              Login
+            </Button>
           )}
-          <Button className="w-full my-2" type="submit">
-            {" "}
-            Login{" "}
-          </Button>
 
           <div className="text-sm pt-4">
             Don't have an account ?

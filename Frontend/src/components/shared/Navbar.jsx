@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { LogOut, User } from "lucide-react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -70,15 +69,17 @@ const Navbar = () => {
                   />
                 </Avatar>
               </PopoverTrigger>
-              <PopoverContent className="flex mx-2 flex-col items-center w-[22rem]">
-                <div className="flex gap-6 items-center">
-                  <Avatar className="w-14 h-14 rounded-full border border-gray-300">
+              <PopoverContent className="flex mx-2 flex-col items-center w-96 text-lg">
+                <div className="flex items-center">
+                  <div className="w-[27%] rounded-full border border-gray-300 mr-6">
+                  <Avatar >
                     <AvatarImage
                       src="https://github.com/shadcn.png"
                       alt="@shadcn"
                       className="w-full h-full object-cover rounded-full"
                     />
                   </Avatar>
+                  </div>
                   <div className="flex flex-col">
                     <h1 className="font-medium text-lg">{"Aarush kumar"}</h1>
                     <p>
@@ -87,23 +88,23 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col m-4 w-full text-gray-600">
-                  <div className="flex items-center justify-start w-full">
-                    <User size={30} />
+                <div className="flex flex-col m-4 w-full text-gray-600 gap-2">
+                  <div className="flex items-center w-full ">
+                    <User size={27} />
                     <Button
                       variant="link"
-                      className="text-lg px-6 py-2 text-gray-600"
+                      className="text-lg px-6 py-2 text-gray-600 pt-1"
                       tabIndex={-1}
                     >
                       Profile
                     </Button>
                   </div>
-                  <div className="flex items-center justify-start w-full">
-                    <LogOut size={30} />
+                  <div className="flex items-center w-full">
+                    <LogOut size={25} />
                     <Link to="/logout">
                       <Button
                         variant="link"
-                        className="text-lg px-6 py-2 text-gray-600"
+                        className="text-lg px-6 py-2 text-gray-600 pt-1"
                         tabIndex={-1}
                       >
                         Logout
