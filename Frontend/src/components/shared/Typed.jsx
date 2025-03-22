@@ -1,25 +1,17 @@
 import React from "react";
 import { ReactTyped } from "react-typed";
 
-const Typed = () => {
+const Typed = ({ messages }) => {
   return (
-    <div className="w-full max-w-[1000px] "> 
+    <div className="text-center w-full px-4">
       <ReactTyped
-        strings={[
-            "Welcome to our site !!!",
-            "We're still working on it 🚀",
-            "Feel free to explore and give feedback !!!"
-          ]}
-          
-        typeSpeed={100}
-        backSpeed={90}
-        attr="placeholder"
+        strings={messages}
+        typeSpeed={90}
+        backSpeed={70}
+        className="block"
         loop
-      >
-      <input type="text" className="py-4 text-center w-full" />
-      </ReactTyped>
+      />
     </div>
-  );  
+  );
 };
-
-export default Typed; 
+export default Typed;
