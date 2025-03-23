@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "./shared/Navbar";
-import Typed from "./shared/Typed";
 import Footer from "./shared/Footer";
 import HeroSection from "./HeroSection";
 import CategoryCarousel from "./CategoryCarousel";
@@ -11,8 +10,8 @@ const Home = () => {
     <>
       <Navbar />
       <HeroSection />
-      {/* <CategoryCarousel />
-      <LatestJobs /> */}
+      <CategoryCarousel />
+      {/* <LatestJobs /> */}
     </>
   );
 };
