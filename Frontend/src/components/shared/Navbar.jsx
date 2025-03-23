@@ -126,11 +126,12 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`md:hidden fixed left-0 top-0 w-[60%] h-full border-r border-gray-300 bg-white z-50 
-            transition-transform duration-300 ${
-              navOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+        className={
+          navOpen
+            ? " fixed left-0 top-0 w-[70%] h-full border-r  rounded-md border-gray-300 bg-white ease-in-out duration-500 z-50"
+            : "fixed left-[-250%] " }
         >
+
           <h1 className="text-3xl font-bold w-full m-4">
             Opportune<span className="text-[#F83002]">X</span>
           </h1>

@@ -19,7 +19,7 @@ const HeroSection = () => {
           Get your <span className="text-[#6A38C2]">Dream Jobs</span>
         </h1>
       </div>
-      <div className="flex justify-center w-full px-4 m-3 text-lg sm:text-2xl md:text-3xl text-gray-500">
+      <div className="flex justify-center max-[460px]:min-h-[60px] w-full px-4 m-3 text-lg sm:text-2xl md:text-3xl text-gray-500">
         <Typed
           messages={[
             "Find your dream job in just a few clicks 🚀",
