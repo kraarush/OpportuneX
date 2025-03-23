@@ -11,7 +11,8 @@ const Home = () => {
       <Navbar />
       <HeroSection />
       <CategoryCarousel />
-      {/* <LatestJobs /> */}
+      <LatestJobs />
+      <Footer/>
     </>
   );
 };

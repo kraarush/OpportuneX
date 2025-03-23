@@ -23,7 +23,7 @@ const CategoryCarousel = () => {
   ];
 
   return (
-    <div className="relative w-full md:max-w-6xl mx-auto my-10 text-xl px-4 py-2">
+    <div className="relative w-full md:max-w-6xl mx-auto my-16 text-xl px-4 py-2">
         <Carousel>
           <CarouselContent className="-ml-2 md:-ml-4">
             {roles.map((role, index) => (
