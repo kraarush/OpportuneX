@@ -2,7 +2,7 @@ import Login from "@/components/auth/Login";
 import Signup from "@/components/auth/Signup";
 import Browse from "@/components/Browse";
 import Jobs from "@/components/Jobs";
-import Notfound from "@/components/shared/Notfound";
+import NotFound from "@/components/shared/NotFound";
 import Home from "../Home";
 import { createBrowserRouter } from "react-router-dom";
 import Logout from "../auth/Logout";
@@ -14,7 +14,7 @@ const appRouter = createBrowserRouter([
     { path: "signup", element: <Signup /> },
     { path: "browse", element: <Browse /> },
     { path:"logout", element:<Logout/>},
-    { path: "*", element: <Notfound /> },
+    { path: "*", element: <NotFound /> },
 ]);
 
 export default appRouter;
