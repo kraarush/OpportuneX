@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="border-t border-t-gray-200 py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
+          <div className="mb-4 md:mb-0 w-[460px]:text-center">
             <h2 className="text-xl font-bold">Opportune<span className="text-[#F83002]">X</span></h2>
             <p className="text-sm">
               © {year} OpportuneX. All rights reserved.
