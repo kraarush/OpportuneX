@@ -10,7 +10,7 @@ const FilterCard = () => {
         Apply Filters
       </p>
 
-      <div className="flex flex-col gap-5 overflow-y-auto">
+      <div className="flex flex-col gap-5">
         {filters.map((obj, index) => {
           return (
             <div key={index} className="flex flex-col gap-3">
@@ -19,7 +19,7 @@ const FilterCard = () => {
                 <div className="flex flex-col gap-2">
                   {obj.array.map((ele, index) => {
                     return (
-                      <div className="flex gap-2">
+                      <div key={index} className="flex gap-2">
                         <RadioGroupItem key={index} value={ele} id={index} />
                         <Label className="text-gray-600">{ele}</Label>
                       </div>
