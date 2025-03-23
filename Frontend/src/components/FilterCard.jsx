@@ -14,14 +14,14 @@ const FilterCard = () => {
         {filters.map((obj, index) => {
           return (
             <div key={index} className="flex flex-col gap-3">
-              <h1>{obj.filterType}</h1>
+              <h1 className="font-semibold text-lg">{obj.filterType}</h1>
               <RadioGroup>
                 <div className="flex flex-col gap-2">
                   {obj.array.map((ele, index) => {
                     return (
                       <div className="flex gap-2">
                         <RadioGroupItem key={index} value={ele} id={index} />
-                        <Label>{ele}</Label>
+                        <Label className="text-gray-600">{ele}</Label>
                       </div>
                     );
                   })}

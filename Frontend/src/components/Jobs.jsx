@@ -4,10 +4,10 @@ import Footer from "./shared/Footer";
 import FilterCard from "./FilterCard";
 import JobCard from "./shared/JobCard";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import jobs from "@/data/latestJobsData";
 
 const Jobs = () => {
   const [showFilters, setShowFilters] = useState(false);
-  const jobs = Array(20).fill(0);
 
   return (
     <>
@@ -19,17 +19,34 @@ const Jobs = () => {
             className="md:hidden flex items-center gap-2 px-4 py-2 border rounded-md bg-gray-100 hover:bg-gray-200"
             onClick={() => setShowFilters(!showFilters)}
           >
-            {showFilters ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+            {showFilters ? (
+              <AiOutlineClose size={20} />
+            ) : (
+              <AiOutlineMenu size={20} />
+            )}
             Filters
           </button>
 
-          <div className={`md:w-[20%] ${showFilters ? "block" : "hidden"} md:block`}>
+          <div
+            className={`md:w-[20%] ${
+              showFilters ? "block" : "hidden"
+            } md:block`}
+          >
             <FilterCard />
           </div>
 
           <div className="flex-1 max-h-[80vh] max-[640px]:w-4/5 max-[640px]:mx-auto overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
-            {jobs.map((_, index) => (
-              <JobCard key={index} />
+            {jobs.map((job, index) => (
+              <JobCard
+                key={index}
+                title={job.title}
+                company={job.company}
+                location={job.location}
+                description={job.description}
+                salary={job.salary}
+                type={job.type}
+                positions={job.positions}
+              />
             ))}
           </div>
         </div>
