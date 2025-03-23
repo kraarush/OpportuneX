@@ -11,7 +11,7 @@ const LatestJobs = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 max-[640px]:w-4/5 max-[640px]:mx-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2 md:p-4 lg:p-6">
-        {jobs.map((job, index) => (
+        {jobs.slice(0,6).map((job, index) => (
           <LatestJobsCard
             key={index}
             title={job.title}
