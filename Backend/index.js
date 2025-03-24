@@ -39,9 +39,12 @@ app.listen(PORT, () => {
     console.log(`Server is live on port: ${PORT}`);
 });
 
-
 // pinging the backend server
-const url = 'https://opportunex.onrender.com/';
+app.get('/pinging', (req,res) => {
+    res.send("hello");
+});
+
+const url = 'https://opportunex.onrender.com/pinging';
 
 function getRandomInterval(minMinutes, maxMinutes) {
     const minMilliseconds = minMinutes * 60 * 1000;
