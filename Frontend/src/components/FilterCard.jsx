@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
-import { Button } from "./ui/button"; // Importing the Button component
+import { Button } from "./ui/button";
 import filtersData from "@/data/filterData";
 
 const FilterCard = () => {
@@ -20,11 +20,11 @@ const FilterCard = () => {
 
   return (
     <div>
-      <p className="text-lg sm:text-xl md:text-2xl font-medium mb-5">
+      <p className="text-lg sm:text-xl md:text-2xl font-medium ">
         Apply Filters
       </p>
 
-      <div className="my-5">
+      <div className="my-2">
         <Button variant="ghost" onClick={resetFilters}>
           Reset Filters
         </Button>
