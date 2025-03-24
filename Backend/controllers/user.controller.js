@@ -22,10 +22,10 @@ export const register = async (req, res) => {
 
     if (req.file) {
       if (!req.file.mimetype.startsWith("image/")) {
-        return res.status(400).json({ message: "Invalid file type. Only image files are allowed." , success: false});
+        return res.status(400).json({ message: "Invalid file type. Only image files are allowed.", success: false });
       }
-  
-      if (req.file.size > 5 * 1024 * 1024) {  
+
+      if (req.file.size > 5 * 1024 * 1024) {
         return res.status(400).json({ message: "File size too large. Max allowed is 5MB.", success: false });
       }
     }
@@ -110,6 +110,8 @@ export const login = async (req, res) => {
       });
     }
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     const tokenData = {
       userId: user._id,
     };
@@ -128,8 +130,8 @@ export const login = async (req, res) => {
       .cookie(cookieName, token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,      // change to false so that js-cookie can access them in frontend
-        secure: false,
-        sameSite: 'strict',
+        secure: isProduction, // true only in production
+        sameSite: isProduction ? 'none' : 'lax',
       })
       .json({
         message: `Welcome back, ${user.fullname}`,

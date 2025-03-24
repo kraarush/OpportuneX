@@ -7,7 +7,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { LogOut, StarOff, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";

@@ -14,7 +14,7 @@ const JobCard = ({ postedTime, company, location, title, description, salary, ty
       <div className="flex items-center  gap-1 sm:gap-2">
         <div>
           <img
-            src="./public/OpportuneX_logo.png"
+            src="/OpportuneX_logo.png"
             alt="company_logo"
             className="h-[4rem] rounded-md border border-gray-300"
           />
