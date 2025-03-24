@@ -13,8 +13,8 @@ const Jobs = () => {
     <>
       <Navbar />
 
-      <div className="max-w-7xl mx-auto my-6 px-4 md:px-6">
-        <div className="flex flex-col md:flex-row gap-6">
+      <div className="max-w-[1400px] mx-auto my-6 px-4 md:px-6">
+        <div className="flex flex-col md:flex-row gap-2">
           <button
             className="md:hidden flex items-center gap-2 px-4 py-2 border rounded-md bg-gray-100 hover:bg-gray-200"
             onClick={() => setShowFilters(!showFilters)}
@@ -37,7 +37,7 @@ const Jobs = () => {
             </div>
           </div>
 
-          <div className="flex-1 max-h-[86vh] max-[640px]:w-4/5 max-[640px]:mx-auto overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-1">
+          <div className="flex-1 max-h-[86vh] max-[640px]:w-4/5 max-[640px]:mx-auto overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
             {jobs.map((job, index) => (
               <JobCard
                 key={index}

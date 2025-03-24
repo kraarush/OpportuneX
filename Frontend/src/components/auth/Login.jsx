@@ -11,7 +11,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { BACKEND_URL } from "@/utils/apis";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,11 +56,10 @@ const Login = () => {
         withCredentials: true,
       });
 
-      if (res.data.success) {
-        setTimeout(() => {
-          toast.success(res.data.message);
-          navigate("/");
-        }, 100);
+      if (res.data?.success) {
+        dispatch(setUser(res.data.user));
+        toast.success(res.data.message);
+        navigate("/");
       }
     } catch (error) {
       console.log(error.response.data);

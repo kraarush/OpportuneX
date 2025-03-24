@@ -23,7 +23,7 @@ const FilterCard = () => {
       <p className="text-lg sm:text-xl md:text-2xl font-medium ">
         Apply Filters
       </p>
-
+      <hr className="mt-2 border border-gray-300" />
       <div className="my-2">
         <Button variant="ghost" onClick={resetFilters}>
           Reset Filters

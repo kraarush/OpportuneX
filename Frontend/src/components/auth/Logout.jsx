@@ -3,36 +3,30 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "@/utils/apis";
 import Navbar from "../shared/Navbar";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/authSlice";
+import { toast } from "sonner";
 
 const Logout = () => {
-  const [message, setMessage] = useState("Logging out...");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     const logout = async () => {
       try {
+        dispatch(setUser(null));
         await axios.get(`${BACKEND_URL}/user/logout`,{withCredentials: true});
-        setMessage("You have been logged out successfully!!");
-        setTimeout(() => {
-          navigate("/");
-        }, 1500);
+        toast.success("You have been logged out successfully!!");
+        navigate("/");
       } catch (error) {
-        setMessage("Failed to log out. Please try again.");
+        toast.error("Failed to log out. Please try again.");
       }
     };
 
     logout();
   }, []);
 
-  return (
-    <>
-    <Navbar/>
-    <div className="flex justify-center items-center h-[90vh]">
-      <div className="bg-white shadow-lg rounded-lg p-6">
-        <p className="text-lg text-gray-700">{message}</p>
-      </div>
-    </div>
-    </>
+  return (<div></div>
   );
 };
 

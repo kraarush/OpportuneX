@@ -80,10 +80,8 @@ const Signup = () => {
       });
 
       if (res.data.success) {
-        setTimeout(() => {
-          toast.success(res.data.message);
-          navigate("/login");
-        }, 2000);
+        toast.success(res.data.message);
+        navigate("/login");
       }
     } catch (error) {
       console.log(error.response.data);

@@ -3,7 +3,7 @@ const jobs = [{
     company: "TechNova",
     location: "Bangalore, India",
     description: "Develop scalable applications, debug code, and collaborate with cross-functional teams to enhance system performance.",
-    salary: "80k - 100k",
+    salary: 90,
     type: "Full-Time",
     positions: "5",
     time: "2 days ago"
@@ -13,7 +13,7 @@ const jobs = [{
     company: "InnoSoft",
     location: "Remote",
     description: "Build modern, responsive UIs using React and Tailwind CSS, ensuring seamless user experience across devices.",
-    salary: "60k - 90k",
+    salary: 75,
     type: "Full-Time",
     positions: "3",
     time: "1 week ago"
@@ -23,7 +23,7 @@ const jobs = [{
     company: "DataBridge",
     location: "Mumbai, India",
     description: "Analyze large datasets, create visual reports, and provide actionable insights to improve business decisions.",
-    salary: "70k - 95k",
+    salary: 82,
     type: "Full-Time",
     positions: "4",
     time: "3 days ago"
@@ -33,7 +33,7 @@ const jobs = [{
     company: "CodeCraft",
     location: "Hyderabad, India",
     description: "Develop and maintain RESTful APIs, optimize database performance, and ensure secure backend architecture.",
-    salary: "85k - 110k",
+    salary: 98,
     type: "Full-Time",
     positions: "6",
     time: "5 days ago"
@@ -43,7 +43,7 @@ const jobs = [{
     company: "PixelWorks",
     location: "Delhi, India",
     description: "Design intuitive user interfaces, conduct user research, and improve accessibility and aesthetics of web and mobile apps.",
-    salary: "55k - 80k",
+    salary: 68,
     type: "Full-Time",
     positions: "2",
     time: "1 week ago"
@@ -53,7 +53,7 @@ const jobs = [{
     company: "CloudSphere",
     location: "Pune, India",
     description: "Manage cloud infrastructure, automate CI/CD pipelines, and improve system scalability and reliability.",
-    salary: "90k - 120k",
+    salary: 105,
     type: "Full-Time",
     positions: "3",
     time: "4 days ago"
@@ -63,7 +63,7 @@ const jobs = [{
     company: "AppTech",
     location: "Chennai, India",
     description: "Develop mobile applications using Flutter and React Native, ensuring high performance and responsiveness.",
-    salary: "75k - 100k",
+    salary: 88,
     type: "Full-Time",
     positions: "4",
     time: "2 days ago"
@@ -73,7 +73,7 @@ const jobs = [{
     company: "AI Solutions",
     location: "Bangalore, India",
     description: "Build machine learning models, analyze data, and implement AI algorithms to improve business processes.",
-    salary: "100k - 130k",
+    salary: 115,
     type: "Full-Time",
     positions: "2",
     time: "1 day ago"
@@ -83,7 +83,7 @@ const jobs = [{
     company: "InnovateTech",
     location: "Remote",
     description: "Lead product development teams, define product roadmaps, and ensure successful launch of new products.",
-    salary: "110k - 150k",
+    salary: 130,
     type: "Full-Time",
     positions: "3",
     time: "3 days ago"
@@ -93,7 +93,7 @@ const jobs = [{
     company: "TestPro",
     location: "Hyderabad, India",
     description: "Create test plans, execute tests, and identify bugs to ensure high-quality software products.",
-    salary: "60k - 85k",
+    salary: 72,
     type: "Full-Time",
     positions: "5",
     time: "6 days ago"
@@ -103,7 +103,7 @@ const jobs = [{
     company: "BrandVision",
     location: "Mumbai, India",
     description: "Develop and implement marketing strategies to increase brand awareness and drive sales.",
-    salary: "80k - 110k",
+    salary: 95,
     type: "Full-Time",
     positions: "3",
     time: "1 week ago"
@@ -113,7 +113,7 @@ const jobs = [{
     company: "SecureNet",
     location: "Delhi, India",
     description: "Manage IT infrastructure, troubleshoot server issues, and ensure the security of network systems.",
-    salary: "70k - 95k",
+    salary: 82,
     type: "Full-Time",
     positions: "4",
     time: "5 days ago"
@@ -123,7 +123,7 @@ const jobs = [{
     company: "TechGear",
     location: "Bangalore, India",
     description: "Drive sales through client outreach, presentations, and negotiations to meet targets.",
-    salary: "40k - 60k",
+    salary: 50,
     type: "Full-Time",
     positions: "7",
     time: "2 days ago"
@@ -133,7 +133,7 @@ const jobs = [{
     company: "SkyTech",
     location: "Pune, India",
     description: "Design cloud infrastructure, migrate services to the cloud, and optimize resource usage.",
-    salary: "120k - 150k",
+    salary: 135,
     type: "Full-Time",
     positions: "3",
     time: "4 days ago"
@@ -143,160 +143,141 @@ const jobs = [{
     company: "PixelPlay",
     location: "Chennai, India",
     description: "Design and develop interactive games for mobile and console platforms.",
-    salary: "80k - 100k",
+    salary: 90,
     type: "Full-Time",
     positions: "2",
     time: "1 day ago"
 },
 {
-    title: "Full Stack Developer",
-    company: "DevSolution",
-    location: "Remote",
-    description: "Develop both frontend and backend for scalable web applications using modern frameworks.",
-    salary: "95k - 125k",
-    type: "Full-Time",
-    positions: "4",
-    time: "3 days ago"
-},
-{
-    title: "Security Analyst",
-    company: "CyberGuard",
-    location: "Bangalore, India",
-    description: "Monitor networks for security breaches, conduct risk assessments, and improve security measures.",
-    salary: "90k - 110k",
+    title: "Cybersecurity Analyst",
+    company: "SecureX",
+    location: "Hyderabad, India",
+    description: "Monitor and secure networks, analyze threats, and implement security protocols to prevent breaches.",
+    salary: 110,
     type: "Full-Time",
     positions: "3",
-    time: "5 days ago"
+    time: "2 days ago"
 },
 {
-    title: "Operations Manager",
-    company: "LogiTech",
-    location: "Hyderabad, India",
-    description: "Oversee day-to-day operations, improve processes, and ensure efficient workflow across departments.",
-    salary: "100k - 130k",
-    type: "Full-Time",
-    positions: "2",
-    time: "6 days ago"
-},
-{
-    title: "Content Writer",
-    company: "CreativeWrite",
-    location: "Mumbai, India",
-    description: "Write blog posts, articles, and other content to promote company products and services.",
-    salary: "40k - 60k",
-    type: "Full-Time",
-    positions: "5",
-    time: "1 week ago"
-},
-{
-    title: "HR Manager",
-    company: "PeopleFirst",
-    location: "Remote",
-    description: "Oversee hiring processes, employee engagement, and company policies to maintain a positive work culture.",
-    salary: "80k - 100k",
+    title: "AI Researcher",
+    company: "DeepMindTech",
+    location: "Bangalore, India",
+    description: "Research and develop innovative AI models, pushing the boundaries of artificial intelligence.",
+    salary: 140,
     type: "Full-Time",
     positions: "2",
     time: "3 days ago"
 },
 {
     title: "Blockchain Developer",
-    company: "BlockChainX",
+    company: "CryptoInnovate",
     location: "Remote",
-    description: "Develop and implement blockchain-based applications, ensuring secure and efficient systems.",
-    salary: "100k - 130k",
-    type: "Full-Time",
-    positions: "2",
-    time: "2 days ago"
-},
-{
-    title: "Android Developer",
-    company: "AppWorld",
-    location: "Mumbai, India",
-    description: "Develop mobile applications for the Android platform, ensuring seamless user experience.",
-    salary: "75k - 95k",
-    type: "Full-Time",
-    positions: "4",
-    time: "4 days ago"
-},
-{
-    title: "Web Developer",
-    company: "WebDev Solutions",
-    location: "Bangalore, India",
-    description: "Build and maintain websites using modern frameworks and ensure mobile responsiveness.",
-    salary: "60k - 80k",
-    type: "Full-Time",
-    positions: "6",
-    time: "5 days ago"
-},
-{
-    title: "Cybersecurity Engineer",
-    company: "SecureShield",
-    location: "Bangalore, India",
-    description: "Develop security protocols, monitor network vulnerabilities, and implement cybersecurity measures.",
-    salary: "95k - 120k",
+    description: "Develop decentralized applications and smart contracts using blockchain technology.",
+    salary: 125,
     type: "Full-Time",
     positions: "3",
-    time: "2 days ago"
-},
-{
-    title: "AI Research Scientist",
-    company: "DeepAI Labs",
-    location: "Remote",
-    description: "Conduct research in artificial intelligence, develop deep learning models, and improve NLP systems.",
-    salary: "130k - 160k",
-    type: "Full-Time",
-    positions: "2",
-    time: "3 days ago"
-},
-{
-    title: "Business Analyst",
-    company: "BizGrow Solutions",
-    location: "Pune, India",
-    description: "Analyze business processes, gather requirements, and recommend solutions to optimize performance.",
-    salary: "70k - 90k",
-    type: "Full-Time",
-    positions: "4",
-    time: "5 days ago"
+    time: "4 days ago"
 },
 {
     title: "Embedded Systems Engineer",
-    company: "TechEmbed",
-    location: "Chennai, India",
-    description: "Develop firmware, optimize embedded software, and work with microcontrollers for IoT applications.",
-    salary: "85k - 110k",
+    company: "MicroTech",
+    location: "Pune, India",
+    description: "Develop firmware and embedded software for IoT and hardware devices.",
+    salary: 78,
+    type: "Full-Time",
+    positions: "4",
+    time: "1 week ago"
+},
+{
+    title: "Network Engineer",
+    company: "ConnectNow",
+    location: "Delhi, India",
+    description: "Design and maintain network infrastructure, troubleshoot connectivity issues, and optimize performance.",
+    salary: 85,
+    type: "Full-Time",
+    positions: "5",
+    time: "5 days ago"
+},
+{
+    title: "Database Administrator",
+    company: "DataVault",
+    location: "Mumbai, India",
+    description: "Manage database performance, security, and backup procedures for high availability.",
+    salary: 87,
+    type: "Full-Time",
+    positions: "4",
+    time: "2 days ago"
+},
+{
+    title: "IT Support Specialist",
+    company: "TechAssist",
+    location: "Hyderabad, India",
+    description: "Provide technical assistance to users, troubleshoot software/hardware issues, and maintain systems.",
+    salary: 60,
+    type: "Full-Time",
+    positions: "6",
+    time: "3 days ago"
+},
+{
+    title: "HR Manager",
+    company: "PeopleFirst",
+    location: "Bangalore, India",
+    description: "Oversee HR policies, recruit top talent, and manage employee relations.",
+    salary: 92,
     type: "Full-Time",
     positions: "3",
+    time: "1 week ago"
+},
+{
+    title: "Full Stack Developer",
+    company: "WebGenius",
+    location: "Remote",
+    description: "Develop both frontend and backend applications with modern tech stacks.",
+    salary: 102,
+    type: "Full-Time",
+    positions: "4",
     time: "4 days ago"
 },
 {
-    title: "Customer Support Specialist",
-    company: "HelpDesk Pro",
+    title: "Business Analyst",
+    company: "BizSolutions",
     location: "Delhi, India",
-    description: "Resolve customer issues, improve customer experience, and provide technical assistance.",
-    salary: "50k - 70k",
+    description: "Analyze business processes, identify improvements, and bridge gaps between IT and business teams.",
+    salary: 80,
     type: "Full-Time",
     positions: "5",
+    time: "6 days ago"
+},
+{
+    title: "SEO Specialist",
+    company: "SearchBoost",
+    location: "Mumbai, India",
+    description: "Optimize websites for search engines, improve rankings, and drive organic traffic.",
+    salary: 65,
+    type: "Full-Time",
+    positions: "3",
     time: "1 week ago"
 },
 {
     title: "Electrical Engineer",
-    company: "PowerGrid Solutions",
-    location: "Hyderabad, India",
-    description: "Design and maintain electrical systems, improve energy efficiency, and ensure system reliability.",
-    salary: "75k - 100k",
+    company: "PowerGrid",
+    location: "Pune, India",
+    description: "Design, test, and implement electrical systems for industrial applications.",
+    salary: 88,
     type: "Full-Time",
-    positions: "3",
-    time: "6 days ago"
+    positions: "4",
+    time: "5 days ago"
 },
 {
-    title: "Robotics Engineer",
-    company: "AutoBotics",
-    location: "Bangalore, India",
-    description: "Develop robotic solutions, optimize automation systems, and work with AI-driven robotics.",
-    salary: "120k - 150k",
+    title: "Content Writer",
+    company: "WriteNow",
+    location: "Remote",
+    description: "Create compelling content for blogs, websites, and marketing materials.",
+    salary: 55,
     type: "Full-Time",
-    positions: "2",
+    positions: "3",
     time: "2 days ago"
-}];
+}
+];
 
 export default jobs;

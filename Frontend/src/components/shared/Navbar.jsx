@@ -1,14 +1,16 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { LogOut, User } from "lucide-react";
+import { LogOut, StarOff, User } from "lucide-react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+
+  const loggedIn = useSelector(store => store.auth.user);
 
   const handleNav = () => setNavOpen(!navOpen);
 
