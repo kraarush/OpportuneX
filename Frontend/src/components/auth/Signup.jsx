@@ -72,7 +72,7 @@ const Signup = () => {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${BACKEND_URL}/user/register`, formData, {
+      const res = await axios.post(`${BACKEND_URL}/user/register`, userData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -279,23 +279,25 @@ const Signup = () => {
                     <Input
                       type="radio"
                       name="role"
+                      id="role-student"
                       value="student"
                       checked={formData.role === "student"}
                       onChange={changeEventHandler}
                       className="cursor-pointer placeholder:text-sm md:placeholder:text-base"
                     />
-                    <Label htmlFor="r1">Student</Label>
+                    <Label htmlFor="role-student">Student</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Input
                       type="radio"
                       name="role"
+                      id="role-recruiter"
                       value="recruiter"
                       checked={formData.role === "recruiter"}
                       onChange={changeEventHandler}
                       className="cursor-pointerplaceholder:text-sm md:placeholder:text-base"
                     />
-                    <Label htmlFor="r2">Recruiter</Label>
+                    <Label htmlFor="role-recruiter">Recruiter</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -312,7 +314,7 @@ const Signup = () => {
               </div>
             </div>
             {errors.role && (
-              <p className="text-red-500 text-sm my-1 mt-[-20px] mb-4">
+              <p className="text-red-500 text-sm my-1  md:mt-[-20px] mb-4">
                 {errors.role}
               </p>
             )}
@@ -337,7 +339,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

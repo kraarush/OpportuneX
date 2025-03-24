@@ -17,7 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {loading} = useSelector((store) => store.auth);
+  const { loading } = useSelector((store) => store.auth);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -166,24 +166,30 @@ const Login = () => {
               <div className="flex items-center space-x-2">
                 <Input
                   type="radio"
+                  id="role-student"
                   name="role"
                   value="student"
                   checked={formData.role === "student"}
                   onChange={changeEventHandler}
-                  className="cursor-pointer placeholder:text-sm md:placeholder:text-base"
+                  className="cursor-pointer"
                 />
-                <Label htmlFor="r1">Student</Label>
+                <Label htmlFor="role-student" className="cursor-pointer">
+                  Student
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Input
                   type="radio"
+                  id="role-recruiter"
                   name="role"
                   value="recruiter"
                   checked={formData.role === "recruiter"}
                   onChange={changeEventHandler}
-                  className="cursor-pointerplaceholder:text-sm md:placeholder:text-base"
+                  className="cursor-pointer"
                 />
-                <Label htmlFor="r2">Recruiter</Label>
+                <Label htmlFor="role-recruiter" className="cursor-pointer">
+                  Recruiter
+                </Label>
               </div>
             </RadioGroup>
             {errors.role && (
@@ -193,7 +199,7 @@ const Login = () => {
 
           {loading ? (
             <Button className="w-full my-2">
-              <Loader2 className="mr-2 w-4 h-4 animate-spin"/>
+              <Loader2 className="mr-2 w-4 h-4 animate-spin" />
               Please wait
             </Button>
           ) : (
@@ -211,7 +217,7 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

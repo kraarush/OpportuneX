@@ -28,14 +28,16 @@ const Jobs = () => {
           </button>
 
           <div
-            className={`md:w-[20%] ${
+            className={`md:w-[15%] ${
               showFilters ? "block" : "hidden"
             } md:block`}
           >
-            <FilterCard />
+            <div className="h-[40vh] sm:h-[50vh] md:h-[86vh] overflow-y-auto border-r border-gray-300 p-4">
+              <FilterCard />
+            </div>
           </div>
 
-          <div className="flex-1 max-h-[80vh] max-[640px]:w-4/5 max-[640px]:mx-auto overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
+          <div className="flex-1 max-h-[86vh] max-[640px]:w-4/5 max-[640px]:mx-auto overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
             {jobs.map((job, index) => (
               <JobCard
                 key={index}
@@ -51,6 +53,7 @@ const Jobs = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
