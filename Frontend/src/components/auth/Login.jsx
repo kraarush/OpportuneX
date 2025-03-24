@@ -57,6 +57,7 @@ const Login = () => {
       });
 
       if (res.data?.success) {
+        console.log(res.data.user);
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
         navigate("/");

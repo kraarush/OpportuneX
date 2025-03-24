@@ -1,16 +1,37 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { LogOut, StarOff, User } from "lucide-react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "sonner";
+import { BACKEND_URL } from "@/utils/apis";
+import { setUser } from "@/redux/authSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const [navOpen, setNavOpen] = useState(false);
+  const loggedIn = useSelector((store) => store.auth.user);
 
-  const loggedIn = useSelector(store => store.auth.user);
+  const logout = async () => {
+    try {
+      dispatch(setUser(null));
+      await axios.get(`${BACKEND_URL}/user/logout`, { withCredentials: true });
+      toast.success("You have been logged out successfully!!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Failed to log out. Please try again.");
+    }
+  };
 
   const handleNav = () => setNavOpen(!navOpen);
 
@@ -74,13 +95,13 @@ const Navbar = () => {
               <PopoverContent className="flex mx-2 flex-col items-center w-96 text-lg">
                 <div className="flex items-center">
                   <div className="w-[27%] rounded-full border border-gray-300 mr-6">
-                  <Avatar >
-                    <AvatarImage
-                      src="https://github.com/shadcn.png"
-                      alt="@shadcn"
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  </Avatar>
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    </Avatar>
                   </div>
                   <div className="flex flex-col">
                     <h1 className="font-medium text-lg">{"Aarush kumar"}</h1>
@@ -103,15 +124,14 @@ const Navbar = () => {
                   </div>
                   <div className="flex items-center w-full">
                     <LogOut size={25} />
-                    <Link to="/logout">
                       <Button
                         variant="link"
                         className="text-lg px-6 py-2 text-gray-600 pt-1"
                         tabIndex={-1}
+                        onClick={() => {logout();}}
                       >
                         Logout
                       </Button>
-                    </Link>
                   </div>
                 </div>
               </PopoverContent>
@@ -128,12 +148,12 @@ const Navbar = () => {
         </div>
 
         <div
-        className={
-          navOpen
-            ? " fixed left-0 top-0 w-[70%] h-full border-r  rounded-md border-gray-300 bg-white ease-in-out duration-500 z-50"
-            : "fixed left-[-250%] " }
+          className={
+            navOpen
+              ? " fixed left-0 top-0 w-[70%] h-full border-r  rounded-md border-gray-300 bg-white ease-in-out duration-500 z-50"
+              : "fixed left-[-250%] "
+          }
         >
-
           <h1 className="text-3xl font-bold w-full m-4">
             Opportune<span className="text-[#F83002]">X</span>
           </h1>
