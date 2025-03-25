@@ -1,19 +1,15 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { LogOut, User } from "lucide-react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { toast } from "sonner";
 import { BACKEND_URL } from "@/utils/apis";
 import { setUser } from "@/redux/authSlice";
+import axios from "axios";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -36,7 +32,7 @@ const Navbar = () => {
   const handleNav = () => setNavOpen(!navOpen);
 
   return (
-    <div className="bg-white border-b border-gray-200 h-[8vh]">
+    <div className="bg-white border-b border-gray-200 fixed top-0 left-0 w-full z-50">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
         {/* Left part */}
         <div>

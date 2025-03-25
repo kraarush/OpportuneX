@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
-import Footer from "../shared/Footer";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
@@ -101,7 +100,7 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center md:max-w-7xl sm:max-w-5xl mx-auto my-16 h-[63vh]">
+      <div className="flex items-center justify-center md:max-w-7xl sm:max-w-5xl mx-auto my-16 pt-[8vh] ">
         <form
           onSubmit={handleSubmit}
           className=" w-4/5 md:w-1/2 border border-gray-200 rounded-md p-6 "
@@ -217,7 +216,6 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <Footer />
     </div>
   );
 };

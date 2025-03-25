@@ -1,7 +1,6 @@
 import React from "react";
 import { IndianRupee, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "../ui/button";
 
 const LatestJobsCard = ({ title, company, location, salary, type, positions, description }) => {
   return (
