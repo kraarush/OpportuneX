@@ -2,8 +2,21 @@ import { Bookmark, IndianRupee, MapPin } from "lucide-react";
 import React from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
-const JobCard = ({ postedTime, company, location, title, description, salary, type, positions }) => {
+const JobCard = ({
+  postedTime,
+  company,
+  location,
+  title,
+  description,
+  salary,
+  type,
+  positions,
+}) => {
+  const navigate = useNavigate();
+  const jobID = "jobId";
+
   return (
     <div className="border border-gray-200 rounded-xl p-4 shadow-md hover:shadow-xl cursor-pointer transition-shadow duration-300 flex flex-col gap-2">
       <div className="flex justify-between px-2">
@@ -53,10 +66,12 @@ const JobCard = ({ postedTime, company, location, title, description, salary, ty
 
       <div className="max-w-[250px] mx-1 md:mx-0 ">
         <div className="flex justify-around">
-          <Button variant="outline" className=" md:mr-8">
+          <Button variant="outline" className=" md:mr-8" onClick={() => {navigate(`/job/description/${jobID}`)}} >
             Details
           </Button>
-          <Button className="bg-[#6A38C2] hover:bg-purple-600">Save for later</Button>
+          <Button className="bg-[#6A38C2] hover:bg-purple-600">
+            Save for later
+          </Button>
         </div>
       </div>
     </div>

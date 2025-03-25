@@ -73,7 +73,7 @@ const Login = () => {
     let newErrors = { ...errors };
 
     if (!formData.email) newErrors.email = "Email is required";
-    else if (!formData.email.includes("@") || !formData.email.includes(".com"))
+    else if (!formData.email.includes("@") || !formData.email.includes("."))
       newErrors.email = "Invalid email format";
     else newErrors.email = "";
 
@@ -100,10 +100,10 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex items-center justify-center md:max-w-7xl sm:max-w-5xl mx-auto my-16 pt-[8vh] ">
+      <div className="flex items-center justify-center md:max-w-5xl sm:max-w-4xl mx-auto my-16 ">
         <form
           onSubmit={handleSubmit}
-          className=" w-4/5 md:w-1/2 border border-gray-200 rounded-md p-6 "
+          className=" w-4/5 md:w-1/2 border border-gray-200 rounded-md p-6 "  
           noValidate
         >
           <h1 className="font-bold md:text-3xl sm:text-2xl text-xl mb-5">

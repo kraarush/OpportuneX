@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 
 const LatestJobsCard = ({ title, company, location, salary, type, positions, description }) => {
   return (
-    <div className="border border-gray-200 rounded-xl p-5 shadow-md hover:shadow-xl cursor-pointer transition-shadow duration-300 flex flex-col gap-3">
+    <div className="border border-gray-200 rounded-xl p-5 shadow-md hover:shadow-xl hover: cursor-pointer transition-shadow duration-300 flex flex-col gap-3">
       <div>
         <h2 className="text-lg font-semibold">{company}</h2>
         <div className="flex items-center gap-2 text-sm mt-1">
@@ -20,7 +20,7 @@ const LatestJobsCard = ({ title, company, location, salary, type, positions, des
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <IndianRupee size={16} className="text-gray-600" />
-            <span>{salary} / month</span>
+            <span>{salary} LPA</span>
           </div>
         </div>
 
