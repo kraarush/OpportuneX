@@ -5,8 +5,8 @@ import Jobs from "@/components/Jobs";
 import NotFound from "@/components/NotFound";
 import Home from "../Home";
 import { createBrowserRouter } from "react-router-dom";
-import JobDetails from "../shared/JobDetails";
 import Profile from "../Profile";
+import JobDescription from "../shared/JobDescription";
 
 const appRouter = createBrowserRouter([
     { path: "/", element: <Home /> },
@@ -14,7 +14,7 @@ const appRouter = createBrowserRouter([
     { path: "/login", element: <Login /> },
     { path: "/signup", element: <Signup /> },
     { path: "/browse", element: <Browse /> },
-    { path: "/job/description/:id", element: <JobDetails /> },
+    { path: "/job/description/:id", element: <JobDescription /> },
     { path: "/profile", element: <Profile /> },
     { path: "*", element: <NotFound /> },
 ]);

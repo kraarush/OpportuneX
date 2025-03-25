@@ -5,7 +5,7 @@ const Typed = ({ messages }) => {
   return (
     <div className="text-center w-full px-4">
       <ReactTyped
-        strings={messages}
+        strings={messages || ["Currently site is under development", "Hello from backend team"]}
         typeSpeed={90}
         backSpeed={70}
         className="block"
