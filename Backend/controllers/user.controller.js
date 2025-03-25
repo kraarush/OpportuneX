@@ -48,6 +48,10 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        bio: "",
+        skills: []
+      }
     });
 
     return res.status(201).json({
@@ -122,15 +126,18 @@ export const login = async (req, res) => {
 
     const cookieName = role === 'student' ? 'student_token' : 'recruiter_token';
 
-    res.clearCookie('student_token');
-    res.clearCookie('recruiter_token');
-
+    res.cookie('student_token', '', { expires: new Date(0), path: '/' });
+    res.cookie('recruiter_token', '', { expires: new Date(0), path: '/' });
+    
+    res.clearCookie('student_token', { path: '/' });
+    res.clearCookie('recruiter_token', { path: '/' });
+    
     res
       .status(200)
       .cookie(cookieName, token, {
         maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,      // change to false so that js-cookie can access them in frontend
-        secure: isProduction, // true only in production
+        httpOnly: true,
+        secure: isProduction,
         sameSite: isProduction ? 'none' : 'lax',
       })
       .json({
@@ -180,7 +187,7 @@ export const updateProfile = async (req, res) => {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
 
-    const userId = req.id;    // id is coming from authmiddleware
+    const userId = req.id;
     let user = await User.findById(userId);
 
     if (!user) {
