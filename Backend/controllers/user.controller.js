@@ -70,6 +70,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     let { email, password, role } = req.body;
+    console.log(req.body);
 
     email = validator.normalizeEmail(email?.trim() || "");
     password = password?.trim() || "";
@@ -199,9 +200,9 @@ export const updateProfile = async (req, res) => {
 
     // checking if the user is updating to an already existing email
     let checkEmail = await User.findOne({ email });
-    if (checkEmail && checkEmail._id.toString() !== userId) {
+    if (checkEmail && checkEmail._id.toString() !== userId.toString()) {
       return res.status(400).json({
-        message: "Email already exists",
+        message: "Email already in use",
         success: false,
       });
     }
@@ -213,20 +214,24 @@ export const updateProfile = async (req, res) => {
       profile: {
         ...user.profile,
         bio: bio || user.profile.bio,
-        skills: skills ? skills.split(",") : user.profile.skills,
+        skills: skills ? skills.split(",").map(skill => skill.trim()) : user.profile.skills,
       },
     });
 
     await user.save();
 
-    // resetting the user object to remove sensitive data before sending through response
     user = {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
       phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
+      profile: {
+        bio: user.profile.bio,
+        skills: user.profile.skills,
+        resume: user.profile.resume,
+      },
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
 
     return res.status(200).json({
@@ -237,7 +242,7 @@ export const updateProfile = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Internal server error updating profile, " + error,
+      message: "Internal server error updating profile, " + error.message,
       success: false,
     });
   }
