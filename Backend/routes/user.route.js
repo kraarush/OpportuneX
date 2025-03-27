@@ -10,4 +10,4 @@ router.route('/login').post(login);
 router.route('/logout').get(logout);
 router.route('/profile/update').post(authMiddleware ,uploadProfileFiles, updateProfile);
 
-export default router; 
+export default router;

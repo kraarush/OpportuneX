@@ -50,9 +50,8 @@ export const register = async (req, res) => {
       const fileUri = getDataUri(file);
       cloudResponse = await cloudinary.uploader.upload(fileUri.content, { folder: 'profile_pic' });
     }
-    if (cloudResponse) {
-      profile_pic = cloudResponse.secure_url || "";
-    }
+
+    const profile_pic = cloudResponse?.secure_url || "";
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -141,14 +140,16 @@ export const login = async (req, res) => {
 
     res.cookie('student_token', '', { expires: new Date(0), path: '/' });
     res.cookie('recruiter_token', '', { expires: new Date(0), path: '/' });
+
+    console.log(cookieName);
     
     res
-      .status(200)
+      .status(200)  
       .cookie(cookieName, token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
         secure: isProduction,
-        sameSite: isProduction ? 'none' : 'lax',
+        sameSite: isProduction ? 'none' : 'strict',
       })
       .json({
         message: `Welcome back, ${user.fullname}`,
@@ -176,7 +177,7 @@ export const logout = async (req, res) => {
         success: true,
       });
   } catch (error) {
-    console.error("Logout Error:", error);
+    console.error("Logout Error: ", error);
     res.status(500).json({
       message: `Internal server error in logging out: ${error.message}`,
       success: false,

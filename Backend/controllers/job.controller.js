@@ -107,7 +107,7 @@ export const getJobById = async (req, res) => {
             });
         }
 
-        const job = await Job.findOne({_id: jobId});
+        const job = await Job.findOne({_id: jobId}).populate('applications').populate('company');
 
         if(!job){
             return res.status(404).json({
