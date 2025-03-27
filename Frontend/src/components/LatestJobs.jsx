@@ -1,8 +1,10 @@
 import React from "react";
 import LatestJobsCard from "./shared/LatestJobsCard";
-import jobs from "@/data/latestJobsData";
+import { useSelector } from "react-redux";
 
 const LatestJobs = () => {
+  const { allJobs } = useSelector((store) => store.job);
+
   return (
     <div className="w-full max-w-7xl mx-auto p-3 my-16">
       <div>
@@ -11,18 +13,25 @@ const LatestJobs = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 max-[640px]:w-4/5 max-[640px]:mx-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2 md:p-4 lg:p-6">
-        {jobs.slice(0,6).map((job, index) => (
-          <LatestJobsCard
-            key={index}
-            title={job.title}
-            company={job.company}
-            location={job.location}
-            description={job.description}
-            salary={job.salary}
-            type={job.type}
-            positions={job.positions}
-          />
-        ))}
+        {allJobs.length === 0 ? (
+          <span className="block text-center text-gray-500 text-lg font-semibold py-6">
+            🚀 No Jobs Yet... Stay Tuned!
+          </span>
+        ) : (
+          allJobs.slice(0, 6).map((job) => (
+              <LatestJobsCard
+                key={job._id}
+                _id={job._id}
+                title={job.title}
+                description={job.description}
+                company={job.company?.name}
+                location={job.location}
+                salary={job.salary}
+                type={job.jobType}
+                positions={job.position}
+              />
+            ))
+        )}
       </div>
     </div>
   );

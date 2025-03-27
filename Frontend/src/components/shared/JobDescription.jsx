@@ -1,25 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { Calendar, Briefcase, MapPin, DollarSign, Users } from "lucide-react";
+import {
+  Calendar,
+  Briefcase,
+  MapPin,
+  DollarSign,
+  Users,
+  IndianRupee,
+} from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { JOB_API_END_POINT } from "@/utils/apis";
+import { setSingleJob } from "@/redux/jobSlice";
 
 const JobDescription = () => {
-  const job = {
-    company: "InnoSoft",
-    type: "Full-Time",
-    positions: "3",
-    role: "Frontend Developer",
-    location: "Remote",
-    description:
-      "Build modern, responsive UIs using React and Tailwind CSS, ensuring seamless user experience across devices.",
-    experience: 2,
-    salary: 75,
-    totalApplicant: 6,
-    time: "1 week ago",
+  const { jobId } = useParams(); // destucturing jobid since in the approuter i have set jobid as the parameter in the url
+  const isApplied = false;
+  const dispatch = useDispatch();
+  const { singleJob } = useSelector((store) => store.job);
+
+  const calculateTime = () => {
+    const createdAt = new Date(singleJob.createdAt);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - createdAt) / 1000);
+
+    if (diffInSeconds < 60) return `${diffInSeconds} sec ago`;
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} hrs ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) return `${diffInDays} days ago`;
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) return `${diffInMonths} months ago`;
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `${diffInYears} years ago`;
   };
 
-  const isApplied = false;
+  useEffect(() => {
+    const fetchSingleJob = async () => {
+      try {
+        const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+          dispatch(setSingleJob(res.data?.job));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchSingleJob();
+  }, [dispatch, jobId, useSelector]);
 
   return (
     <div>
@@ -28,10 +64,15 @@ const JobDescription = () => {
         <div className="bg-white shadow-lg rounded-lg p-6">
           <div className="flex flex-col sm:flex-row justify-between items-center border-b pb-4 gap-4">
             <div className="text-center sm:text-left">
-              <h2 className="font-bold text-2xl">{job.company}</h2>
+              <h2 className="font-bold text-2xl">
+                {singleJob?.company?.name
+                  ? singleJob.company.name.charAt(0).toUpperCase() +
+                    singleJob.company.name.slice(1)
+                  : ""}
+              </h2>
               <div className="flex gap-2 mt-2 justify-center sm:justify-start">
-                <Badge>{job.positions} positions</Badge>
-                <Badge>{job.type}</Badge>
+                <Badge>{singleJob?.position} positions</Badge>
+                <Badge>{singleJob?.jobType}</Badge>
               </div>
             </div>
             <Button
@@ -54,7 +95,7 @@ const JobDescription = () => {
                 <Briefcase className="w-5 h-5 text-gray-600" />
                 <div className="flex max-[300px]:flex-col gap-2">
                   <p className="font-semibold">Role:</p>
-                  <p className="text-gray-700">{job.role}</p>
+                  <p className="text-gray-700">{singleJob?.title}</p>
                 </div>
               </div>
 
@@ -62,7 +103,7 @@ const JobDescription = () => {
                 <MapPin className="w-5 h-5 text-gray-600" />
                 <div className="flex max-[300px]:flex-col gap-2">
                   <p className="font-semibold">Location:</p>
-                  <p className="text-gray-700">{job.location}</p>
+                  <p className="text-gray-700">{singleJob?.location}</p>
                 </div>
               </div>
 
@@ -70,15 +111,17 @@ const JobDescription = () => {
                 <Users className="w-5 h-5 text-gray-600" />
                 <div className="flex max-[300px]:flex-col gap-2">
                   <p className="font-semibold">Total Applicants:</p>
-                  <p className="text-gray-700">{job.totalApplicant}</p>
+                  <p className="text-gray-700">
+                    {singleJob?.applications.length}
+                  </p>
                 </div>
               </div>
 
               <div className="flex max-[400px]:items-start items-center gap-2">
-                <DollarSign className="w-5 h-5 text-gray-600" />
+                <IndianRupee className="w-5 h-5 text-gray-600" />
                 <div className="flex max-[300px]:flex-col gap-2">
                   <p className="font-semibold">Salary:</p>
-                  <p className="text-gray-700">{job.salary} LPA</p>
+                  <p className="text-gray-700">{singleJob?.salary} / month</p>
                 </div>
               </div>
 
@@ -86,7 +129,7 @@ const JobDescription = () => {
                 <Calendar className="w-5 h-5 text-gray-600" />
                 <div className="flex max-[300px]:flex-col gap-2">
                   <p className="font-semibold">Posted:</p>
-                  <p className="text-gray-700">{job.time}</p>
+                  <p className="text-gray-700">{calculateTime()}</p>
                 </div>
               </div>
 
@@ -94,7 +137,9 @@ const JobDescription = () => {
                 <Briefcase className="w-5 h-5 text-gray-600" />
                 <div className="flex max-[300px]:flex-col gap-2">
                   <p className="font-semibold">Experience:</p>
-                  <p className="text-gray-700">{job.experience} years</p>
+                  <p className="text-gray-700">
+                    {singleJob?.experienceLevel} years
+                  </p>
                 </div>
               </div>
             </div>
@@ -104,7 +149,7 @@ const JobDescription = () => {
               <p className="text-lg font-semibold border-b pb-2">
                 Job Description
               </p>
-              <p className="text-gray-700 mt-3">{job.description}</p>
+              <p className="text-gray-700 mt-3">{singleJob?.description}</p>
             </div>
           </div>
         </div>

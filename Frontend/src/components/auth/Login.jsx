@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { BACKEND_URL } from "@/utils/apis";
+import { USER_API_END_POINT } from "@/utils/apis";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
@@ -48,7 +48,7 @@ const Login = () => {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${BACKEND_URL}/user/login`, formData, {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, formData, {
         headers: {
           "Content-Type": "application/json",
         },

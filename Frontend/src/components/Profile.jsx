@@ -9,7 +9,6 @@ import UpdateUserProfile from "./UpdateUserProfile";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
 
@@ -34,7 +33,9 @@ const Profile = () => {
               </Avatar>
 
               <div className="flex flex-col">
-                <p className="font-bold text-xl">{user?.fullname ? user?.fullname : "User name"}</p>
+                <p className="font-bold text-xl">
+                  {user?.fullname ? user?.fullname : "User name"}
+                </p>
                 <p>
                   {user?.profile?.bio ? user?.profile?.bio : "Empty bio . . ."}
                 </p>
@@ -76,13 +77,15 @@ const Profile = () => {
           <div className="flex flex-col">
             <Label className="font-medium text-lg">Resume</Label>
             {user?.profile?.resumeOriginalName ? (
-              <a
-                className="font-medium text-blue-500 cursor-pointer hover:text-blue-700"
-                href={user?.profile?.resume}
-                target="_blank"
-              >
-                {user?.profile?.resumeOriginalName}
-              </a>
+              <span>
+                <a
+                  className="font-medium text-blue-500 cursor-pointer hover:text-blue-700"
+                  href={user?.profile?.resume}
+                  target="_blank"
+                >
+                  {user?.profile?.resumeOriginalName}
+                </a>
+              </span>
             ) : (
               <span>NA</span>
             )}

@@ -1,9 +1,5 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -11,7 +7,7 @@ import { LogOut, User } from "lucide-react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { BACKEND_URL } from "@/utils/apis";
+import { USER_API_END_POINT } from "@/utils/apis";
 import { setUser } from "@/redux/authSlice";
 import axios from "axios";
 
@@ -25,7 +21,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       dispatch(setUser(null));
-      await axios.get(`${BACKEND_URL}/user/logout`, { withCredentials: true });
+      await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
       toast.success("You have been logged out successfully!!");
       navigate("/");
     } catch (error) {

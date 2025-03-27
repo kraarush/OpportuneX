@@ -11,17 +11,12 @@ import { Label } from "./ui/label";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
 import { Loader2, Info } from "lucide-react";
-import { BACKEND_URL } from "@/utils/apis";
+import { USER_API_END_POINT } from "@/utils/apis";
 import { toast } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
 import { DialogDescription } from "@radix-ui/react-dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
   const { loading, user } = useSelector((store) => store.auth);
@@ -69,7 +64,7 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
     try {
       dispatch(setLoading(true));
       const res = await axios.post(
-        `${BACKEND_URL}/user/profile/update`,
+        `${USER_API_END_POINT}/profile/update`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

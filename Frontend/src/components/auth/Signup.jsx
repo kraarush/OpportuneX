@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import axios from "axios";
-import { BACKEND_URL } from "@/utils/apis";
+import { USER_API_END_POINT } from "@/utils/apis";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
@@ -72,7 +72,7 @@ const Signup = () => {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${BACKEND_URL}/user/register`, userData, {
+      const res = await axios.post(`${USER_API_END_POINT}/register`, userData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

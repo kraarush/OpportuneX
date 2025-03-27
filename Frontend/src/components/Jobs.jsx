@@ -4,10 +4,12 @@ import Footer from "./shared/Footer";
 import FilterCard from "./FilterCard";
 import JobCard from "./shared/JobCard";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import jobs from "@/data/latestJobsData";
+import { useSelector } from "react-redux";
 
 const Jobs = () => {
   const [showFilters, setShowFilters] = useState(false);
+
+  const {allJobs} = useSelector(store => store.job);
 
   return (
     <>
@@ -38,18 +40,8 @@ const Jobs = () => {
           </div>
 
           <div className="flex-1 max-h-[86vh] max-[640px]:w-4/5 max-[640px]:mx-auto overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
-            {jobs.map((job, index) => (
-              <JobCard
-                key={index}
-                postedTime={job.time}
-                title={job.title}
-                company={job.company}
-                location={job.location}
-                description={job.description}
-                salary={job.salary}
-                type={job.type}
-                positions={job.positions}
-              />
+            {allJobs.map((job) => (
+              <JobCard key={job._id} job={job} className="self-start"  />
             ))}
           </div>
         </div>
