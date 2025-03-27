@@ -2,12 +2,17 @@ import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import validator from 'validator';
+import getDataUri from "../utils/datauri.js";
+import refinedUser from "../utils/refinedUser.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
 
-    let { fullname, email, phoneNumber, password, role, file } = req.body;
+    let { fullname, email, phoneNumber, password, role } = req.body;
+    const file = req.file;
 
+    
     fullname = fullname?.trim() || "";
     email = validator.normalizeEmail(email?.trim() || "");
     phoneNumber = /^[0-9]{10}$/.test(phoneNumber) ? phoneNumber : "";
@@ -20,16 +25,6 @@ export const register = async (req, res) => {
       });
     }
 
-    if (req.file) {
-      if (!req.file.mimetype.startsWith("image/")) {
-        return res.status(400).json({ message: "Invalid file type. Only image files are allowed.", success: false });
-      }
-
-      if (req.file.size > 5 * 1024 * 1024) {
-        return res.status(400).json({ message: "File size too large. Max allowed is 5MB.", success: false });
-      }
-    }
-
     const user = await User.findOne({ email });
 
     // checking if user with same email exists
@@ -38,6 +33,25 @@ export const register = async (req, res) => {
         message: "Email already exists",
         success: false,
       });
+    }
+
+    let cloudResponse;
+    
+    if (file) {
+
+      if (!req.file.mimetype.startsWith("image/")) {
+        return res.status(400).json({ message: "Invalid file type. Only image files are allowed.", success: false });
+      }
+
+      if (req.file.size > 5 * 1024 * 1024) {
+        return res.status(400).json({ message: "File size too large. Max allowed is 5MB.", success: false });
+      }
+
+      const fileUri = getDataUri(file);
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content, { folder: 'profile_pic' });
+    }
+    if (cloudResponse) {
+      profile_pic = cloudResponse.secure_url || "";
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -49,8 +63,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       role,
       profile: {
-        bio: "",
-        skills: []
+        profilePhoto: profile_pic
       }
     });
 
@@ -70,7 +83,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     let { email, password, role } = req.body;
-    console.log(req.body);
 
     email = validator.normalizeEmail(email?.trim() || "");
     password = password?.trim() || "";
@@ -130,9 +142,6 @@ export const login = async (req, res) => {
     res.cookie('student_token', '', { expires: new Date(0), path: '/' });
     res.cookie('recruiter_token', '', { expires: new Date(0), path: '/' });
     
-    res.clearCookie('student_token', { path: '/' });
-    res.clearCookie('recruiter_token', { path: '/' });
-    
     res
       .status(200)
       .cookie(cookieName, token, {
@@ -143,14 +152,7 @@ export const login = async (req, res) => {
       })
       .json({
         message: `Welcome back, ${user.fullname}`,
-        user: {
-          _id: user._id,
-          fullname: user.fullname,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          role: user.role,
-          profile: user.profile,
-        },
+        user: refinedUser(user),
         success: true,
       });
   } catch (error) {
@@ -186,61 +188,59 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.file;
+    const files = req.files;
+
+    let resumeCloudResponse, profilePhotoCloudResponse;
+    
+    if (files?.resume) {
+      const resumeUri = getDataUri(files.resume[0]);
+      resumeCloudResponse = await cloudinary.uploader.upload(resumeUri.content, { folder: 'resumes' });
+    }
+
+    if (files?.profilePhoto) {
+      const profilePhotoUri = getDataUri(files.profilePhoto[0]);
+      profilePhotoCloudResponse = await cloudinary.uploader.upload(profilePhotoUri.content, { folder: 'profile_photos' });
+    }
 
     const userId = req.id;
     let user = await User.findById(userId);
-
+    
     if (!user) {
-      return res.status(400).json({
-        message: "No user found with given id",
-        success: false,
-      });
+      return res.status(404).json({ message: "User not found", success: false });
     }
 
-    // checking if the user is updating to an already existing email
-    let checkEmail = await User.findOne({ email });
-    if (checkEmail && checkEmail._id.toString() !== userId.toString()) {
-      return res.status(400).json({
-        message: "Email already in use",
-        success: false,
-      });
+    if (email && email !== user.email) {
+      let emailExists = await User.findOne({ email });
+      if (emailExists && emailExists._id.toString() !== userId.toString()) {
+        return res.status(400).json({ message: "Email already in use", success: false });
+      }
     }
 
-    Object.assign(user, {
-      fullname: fullname || user.fullname,
-      email: email || user.email,
-      phoneNumber: phoneNumber || user.phoneNumber,
-      profile: {
-        ...user.profile,
-        bio: bio || user.profile.bio,
-        skills: skills ? skills.split(",").map(skill => skill.trim()) : user.profile.skills,
-      },
-    });
+    user.fullname = fullname || user.fullname;
+    user.email = email || user.email;
+    user.phoneNumber = phoneNumber || user.phoneNumber;
+    user.profile.bio = bio || user.profile.bio;
+    user.profile.skills = skills ? skills.split(",").map(skill => skill.trim()) : user.profile.skills;
+
+    if (resumeCloudResponse) {
+      user.profile.resume = resumeCloudResponse.secure_url;
+      user.profile.resumeOriginalName = files.resume[0].originalname;
+    }
+
+    if (profilePhotoCloudResponse) {
+      user.profile.profilePhoto = profilePhotoCloudResponse.secure_url;
+    }
 
     await user.save();
 
-    user = {
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      profile: {
-        bio: user.profile.bio,
-        skills: user.profile.skills,
-        resume: user.profile.resume,
-      },
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
-
     return res.status(200).json({
       message: "Profile updated successfully",
-      user,
       success: true,
+      user: refinedUser(user)
     });
+
   } catch (error) {
-    console.log(error);
+    console.error("Error updating profile:", error);
     return res.status(500).json({
       message: "Internal server error updating profile, " + error.message,
       success: false,

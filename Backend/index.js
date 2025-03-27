@@ -39,6 +39,11 @@ app.listen(PORT, () => {
     console.log(`Server is live on port: ${PORT}`);
 });
 
+
+
+
+
+
 // pinging the backend server
 app.get('/pinging', (req,res) => {
     res.send("hello");
