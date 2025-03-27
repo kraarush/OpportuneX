@@ -15,7 +15,6 @@ import { BACKEND_URL } from "@/utils/apis";
 import { toast } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import {
   Tooltip,
@@ -27,7 +26,6 @@ import {
 const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
   const { loading, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [input, setInput] = useState({
     fullname: user?.fullname || "",
@@ -35,7 +33,8 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
     phoneNumber: user?.phoneNumber || "",
     bio: user?.profile?.bio || "",
     skills: user?.profile?.skills?.join(", ") || "",
-    file: user?.profile?.resume || "",
+    resume: user?.profile?.resume || "",
+    profilePhoto: user?.profile?.profilePhoto || ""
   });
 
   const handleChange = (e) => {
@@ -43,16 +42,16 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
   };
 
   const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    console.log("File selected for", name, ":", files[0]);
     setInput((prev) => ({
       ...prev,
-      file: e.target.files[0],
+      [name]: files[0],
     }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("here ", input);
 
     let formData = new FormData();
     formData.append("fullname", input.fullname);
@@ -60,8 +59,11 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
-    if (input.file) {
-      formData.append("file", input.file);
+    if (input.resume) {
+      formData.append("resume", input.resume);
+    }
+    if(input.profilePhoto){
+      formData.append("profilePhoto", input.profilePhoto);
     }
 
     try {
@@ -212,7 +214,7 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
                   placeholder="e.g., HTML, CSS, React"
                 />
               </div>
-              
+
               <div className="grid grid-cols-4 items-center gap-4">
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -234,6 +236,29 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
                   onChange={handleFileChange}
                 />
               </div>
+
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Label
+                      htmlFor="profilePhoto"
+                      className="text-right flex items-center gap-1"
+                    >
+                      Profile pic <Info className="w-4 h-4 text-gray-500" />
+                    </Label>
+                  </TooltipTrigger>
+                  <TooltipContent>Upload an image file</TooltipContent>
+                </Tooltip>
+                <Input
+                  type="file"
+                  id="profilePhoto"
+                  name="profilePhoto"
+                  accept="image/*"
+                  className="col-span-3"
+                  onChange={handleFileChange}
+                />
+              </div>
+
             </div>
 
             {loading ? (

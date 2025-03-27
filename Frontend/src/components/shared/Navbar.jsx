@@ -1,5 +1,9 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -14,9 +18,9 @@ import axios from "axios";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const [navOpen, setNavOpen] = useState(false);
-  const loggedIn = useSelector((store) => store.auth.user);
+  const { user } = useSelector((store) => store.auth);
 
   const logout = async () => {
     try {
@@ -61,7 +65,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {!loggedIn ? (
+          {!user ? (
             <div className="flex gap-4">
               <Link to="/signup">
                 <Button
@@ -80,29 +84,39 @@ const Navbar = () => {
           ) : (
             <Popover>
               <PopoverTrigger asChild>
-                <Avatar className="w-10 h-10 cursor-pointer rounded-full border border-gray-300">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                    className="w-full h-full object-cover rounded-full"
-                  />
+                <Avatar className="w-12 h-12 cursor-pointer">
+                  {user?.profile?.profilePhoto ? (
+                    <AvatarImage
+                      src={user?.profile?.profilePhoto}
+                      alt="Profile_pic"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full">
+                      <User size={30} className="text-gray-500" />
+                    </div>
+                  )}
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="flex mx-2 flex-col items-center w-96 text-lg">
                 <div className="flex items-center">
-                  <div className="w-[27%] rounded-full border border-gray-300 mr-6">
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                        className="w-full h-full object-cover rounded-full"
-                      />
+                  <div className="w-[27%] mr-6">
+                    <Avatar className="w-14 h-14">
+                      {user?.profile?.profilePhoto ? (
+                        <AvatarImage
+                          src={user?.profile?.profilePhoto}
+                          alt="Profile_pic"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 flex items-center justify-center bg-gray-200 rounded-full">
+                          <User size={40} className="text-gray-500" />
+                        </div>
+                      )}
                     </Avatar>
                   </div>
                   <div className="flex flex-col">
                     <h1 className="font-medium text-lg">{"Aarush kumar"}</h1>
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      {user?.profile?.bio || ""}
                     </p>
                   </div>
                 </div>
@@ -114,21 +128,23 @@ const Navbar = () => {
                       variant="link"
                       className="text-lg px-6 py-2 text-gray-600 pt-1"
                       tabIndex={-1}
-                      onClick={() => navigate('/profile')}
+                      onClick={() => navigate("/profile")}
                     >
                       Profile
                     </Button>
                   </div>
                   <div className="flex items-center w-full">
                     <LogOut size={25} />
-                      <Button
-                        variant="link"
-                        className="text-lg px-6 py-2 text-gray-600 pt-1"
-                        tabIndex={-1}
-                        onClick={() => {logout();}}
-                      >
-                        Logout
-                      </Button>
+                    <Button
+                      variant="link"
+                      className="text-lg px-6 py-2 text-gray-600 pt-1"
+                      tabIndex={-1}
+                      onClick={() => {
+                        logout();
+                      }}
+                    >
+                      Logout
+                    </Button>
                   </div>
                 </div>
               </PopoverContent>
@@ -156,16 +172,22 @@ const Navbar = () => {
           </h1>
 
           <div className="flex flex-col gap-4 items-center p-4">
-            <Avatar className="w-14 h-14 rounded-full border border-gray-300">
-              <AvatarImage
-                src="https://github.com/shadcn.png"
-                alt="@shadcn"
-                className="w-full h-full object-cover rounded-full"
-              />
+            <Avatar className="w-14 h-14">
+              {user?.profile?.profilePhoto ? (
+                <AvatarImage
+                  src={user?.profile?.profilePhoto}
+                  alt="Profile_pic"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-full">
+                  <User className="w-10 h-10 text-gray-500" />
+                </div>
+              )}
             </Avatar>
             <div className="flex flex-col">
               <h1 className="font-medium text-lg">{"Aarush kumar"}</h1>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <p>{user?.profile?.bio || ""}</p>
             </div>
           </div>
 
@@ -199,7 +221,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {!loggedIn ? (
+          {!user ? (
             <div className="flex flex-col mt-4 items-center">
               <Link
                 to="/signup"
