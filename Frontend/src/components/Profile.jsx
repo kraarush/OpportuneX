@@ -15,8 +15,8 @@ const Profile = () => {
   return (
     <div>
       <Navbar />
-      <div>
-        <div className="border border-gray-300 rounded-md max-w-3xl md:max-w-4xl my-4 md:my-10 mx-auto p-4 md:p-10 flex flex-col gap-5">
+      <div className="shadow-lg max-w-7xl mx-auto p-3 my-10">
+        <div className="border border-gray-300 rounded-md max-w-3xl md:max-w-4xl my-4 md:my-10 mx-auto p-4 md:p-10 flex flex-col gap-5 ">
           <div className="flex justify-between w-full">
             <div className="flex gap-3 items-center">
               <Avatar className="w-20 h-20">

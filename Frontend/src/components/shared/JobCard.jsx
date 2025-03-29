@@ -59,9 +59,19 @@ const JobCard = ({ job, className }) => {
       <div className="flex flex-col gap-2 my-2">
         <p className="font-semibold md:text-lg">{job.title}</p>
         <p className="min-h-[100px]">
-          {job.description.length > 150
-            ? `${job.description.slice(0, 150)}... Click 'Details' for more.`
-            : job.description}
+          {job.description.length > 150 ? (
+            <>
+              {job.description.slice(0, 150)}...
+              <span
+                className="text-blue-600 cursor-pointer hover:underline"
+                onClick={() => navigate(`/job/description/${job._id}`)}
+              >
+                Read more
+              </span>
+            </>
+          ) : (
+            job.description
+          )}
         </p>
       </div>
 

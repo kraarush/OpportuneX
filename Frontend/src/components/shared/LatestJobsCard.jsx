@@ -3,16 +3,7 @@ import { IndianRupee, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 
-const LatestJobsCard = ({
-  _id,
-  title,
-  company,
-  location,
-  salary,
-  type,
-  positions,
-  description,
-}) => {
+const LatestJobsCard = ({ _id, title, company, location, salary, type, positions, description }) => {
   const navigate = useNavigate();
 
   return (

@@ -85,6 +85,7 @@ const Navbar = () => {
                     <AvatarImage
                       src={user?.profile?.profilePhoto}
                       alt="Profile_pic"
+                      className="w-full h-full rounded-full"
                     />
                   ) : (
                     <div className="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full">
@@ -95,13 +96,13 @@ const Navbar = () => {
               </PopoverTrigger>
               <PopoverContent className="flex mx-2 flex-col items-center w-96 text-lg">
                 <div className="flex items-center">
-                  <div className="w-[27%] mr-6">
+                  <div className="w-[30%] mr-6">
                     <Avatar className="w-14 h-14">
                       {user?.profile?.profilePhoto ? (
                         <AvatarImage
                           src={user?.profile?.profilePhoto}
                           alt="Profile_pic"
-                        />
+                          className="w-14 h-14 rounded-full object-cover" />
                       ) : (
                         <div className="w-14 h-14 flex items-center justify-center bg-gray-200 rounded-full">
                           <User size={40} className="text-gray-500" />
