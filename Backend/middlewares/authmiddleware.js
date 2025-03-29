@@ -8,9 +8,6 @@ const authMiddleware = async (req, res, next) => {
 
         let token = studentToken || recruiterToken;
 
-        console.log(studentToken);
-        console.log(recruiterToken);
-
         if (!token) {
             return res.status(401).json({
                 message: "User not authenticated",

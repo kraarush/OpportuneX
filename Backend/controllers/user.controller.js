@@ -71,7 +71,6 @@ export const register = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       message: "Internal server error in Creating account, " + error.message,
       success: false,
@@ -140,8 +139,6 @@ export const login = async (req, res) => {
 
     res.cookie('student_token', '', { expires: new Date(0), path: '/' });
     res.cookie('recruiter_token', '', { expires: new Date(0), path: '/' });
-
-    console.log(cookieName);
     
     res
       .status(200)  
