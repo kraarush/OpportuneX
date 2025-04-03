@@ -10,8 +10,8 @@ router.route('/create').post(authMiddleware, authorizeRole("recruiter"), createJ
 router.route('/getAdminJobs').get(authMiddleware, authorizeRole("recruiter"), getAdminJobs);
 
 // for students
-router.route('/get').get(authMiddleware, getAllJobs);
-router.route('/get/:id').get(authMiddleware, getJobById);
+router.route('/get').get(getAllJobs);
+router.route('/get/:id').get(getJobById);
 
 
 

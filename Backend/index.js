@@ -45,29 +45,31 @@ app.listen(PORT, () => {
 
 
 // pinging the backend server
-app.get('/pinging', (req,res) => {
-    res.send("hello");
-});
 
-const url = 'https://opportunex.onrender.com/pinging';
 
-function getRandomInterval(minMinutes, maxMinutes) {
-    const minMilliseconds = minMinutes * 60 * 1000;
-    const maxMilliseconds = maxMinutes * 60 * 1000;
-    return Math.floor(Math.random() * (maxMilliseconds - minMilliseconds + 1)) + minMilliseconds;
-}
+// app.get('/pinging', (req,res) => {
+//     res.send("hello");
+// });
 
-async function pingServer() {
-    try {
-        const response = await axios.get(url);
-        console.log(`Ping successful at ${new Date().toISOString()}: Status Code ${response.status}`);
-    } catch (error) {
-        console.error(`Ping failed at ${new Date().toISOString()}:`, error.message);
-    } finally {
-        const nextInterval = getRandomInterval(12, 16);
-        console.log(`Next ping scheduled in ${(nextInterval / 60000).toFixed(2)} minutes.`);
-        setTimeout(pingServer, nextInterval);
-    }
-}
+// const url = 'https://opportunex.onrender.com/pinging';
 
-pingServer();
+// function getRandomInterval(minMinutes, maxMinutes) {
+//     const minMilliseconds = minMinutes * 60 * 1000;
+//     const maxMilliseconds = maxMinutes * 60 * 1000;
+//     return Math.floor(Math.random() * (maxMilliseconds - minMilliseconds + 1)) + minMilliseconds;
+// }
+
+// async function pingServer() {
+//     try {
+//         const response = await axios.get(url);
+//         console.log(`Ping successful at ${new Date().toISOString()}: Status Code ${response.status}`);
+//     } catch (error) {
+//         console.error(`Ping failed at ${new Date().toISOString()}:`, error.message);
+//     } finally {
+//         const nextInterval = getRandomInterval(12, 16);
+//         console.log(`Next ping scheduled in ${(nextInterval / 60000).toFixed(2)} minutes.`);
+//         setTimeout(pingServer, nextInterval);
+//     }
+// }
+
+// pingServer();

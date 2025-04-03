@@ -34,14 +34,13 @@ const Navbar = () => {
   return (
     <div className="bg-white border-b border-gray-200 ">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4">
-        {/* Left part */}
-        <div>
+
+        <div onClick={() => {navigate("/")}} className="cursor-pointer">
           <h1 className="md:text-4xl sm:text-3xl text-2xl font-bold">
             Opportune<span className="text-[#F83002]">X</span>
           </h1>
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
           <ul className="flex font-semibold gap-5 md:text-lg mr-4">
             <li>
@@ -94,8 +93,8 @@ const Navbar = () => {
                   )}
                 </Avatar>
               </PopoverTrigger>
-              <PopoverContent className="flex mx-2 flex-col items-center w-96 text-lg">
-                <div className="flex items-center">
+              <PopoverContent className="flex mx-2 flex-col items-start w-96 text-lg">
+                <div className="flex">
                   <div className="w-[30%] mr-6">
                     <Avatar className="w-14 h-14">
                       {user?.profile?.profilePhoto ? (
@@ -110,11 +109,13 @@ const Navbar = () => {
                       )}
                     </Avatar>
                   </div>
-                  <div className="flex flex-col">
-                    <h1 className="font-medium text-lg">{"Aarush kumar"}</h1>
-                    <p>
-                      {user?.profile?.bio || ""}
-                    </p>
+                  <div className="flex flex-col w-full">
+                    <h1 className="font-medium text-lg">{user?.fullname || "username"}</h1>
+                    {/* <p>
+                      {user?.profile?.bio || "asdfgsefhsdfgsdfghsdfghsdfhsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfg"}
+                    </p> */}
+                    <p className="max-w-[250px] break-words">{user?.profile?.bio || "default bio "}</p>
+
                   </div>
                 </div>
 
@@ -183,7 +184,7 @@ const Navbar = () => {
               )}
             </Avatar>
             <div className="flex flex-col">
-              <h1 className="font-medium text-lg">{"Aarush kumar"}</h1>
+              <h1 className="font-medium text-lg">{user?.fullname || "username"}</h1>
               <p>{user?.profile?.bio || ""}</p>
             </div>
           </div>
@@ -256,6 +257,11 @@ const Navbar = () => {
             </div>
           )}
         </div>
+
+        {navOpen && (
+          <div className="fixed inset-0 w-full h-full bg-black bg-opacity-30 z-40" onClick={handleNav}></div>
+        )}
+
       </div>
     </div>
   );

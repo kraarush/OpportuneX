@@ -38,7 +38,6 @@ const UpdateUserProfile = ({ isOpen, setIsOpen }) => {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    console.log("File selected for", name, ":", files[0]);
     setInput((prev) => ({
       ...prev,
       [name]: files[0],

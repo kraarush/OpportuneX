@@ -27,7 +27,7 @@ export const applyJob = async (req, res) => {               // student
         const isAlreadyApplied = await Application.findOne({ job: jobId, applicant: userId });
         if (isAlreadyApplied) {
             return res.status(409).json({
-                message: "Already applied for job",
+                message: "Already applied for this job",
                 success: false,
             });
         }
@@ -42,7 +42,7 @@ export const applyJob = async (req, res) => {               // student
         await job.save();
 
         return res.status(201).json({
-            message: "Application applied successfully",
+            message: "Job applied successfully",
             success: true,
         });
 

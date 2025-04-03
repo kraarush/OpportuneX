@@ -1,65 +1,82 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { Calendar, Briefcase, MapPin, Users, IndianRupee, Loader2 } from "lucide-react";
+import {
+  Calendar,
+  Briefcase,
+  MapPin,
+  Users,
+  IndianRupee,
+  Loader2,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { JOB_API_END_POINT } from "@/utils/apis";
+import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from "@/utils/apis";
 import { setSingleJob } from "@/redux/jobSlice";
+import { toast } from "sonner";
 
 const JobDescription = () => {
-  const { jobId } = useParams(); // destucturing jobid since in the approuter i have set jobid as query parameter
-  const isApplied = false;
   const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.auth);
   const { singleJob } = useSelector((store) => store.job);
+  const { jobId } = useParams();
 
-  const calculateTime = () => {
-    if (!singleJob?.createdAt) return ""; 
+  const [isApplied, setIsApplied] = useState(false);
 
-    const createdAt = new Date(singleJob?.createdAt);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now - createdAt) / 1000);
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.get(
+        `${APPLICATION_API_END_POINT}/apply/${jobId}`,
+        { withCredentials: true }
+      );
+      if (res.data?.success) {
+        setIsApplied(true);
+        toast.success(res.data.message);
 
-    if (diffInSeconds < 60) return `${diffInSeconds} sec ago`;
-    const diffInMinutes = Math.floor(diffInSeconds / 60);
-    if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    if (diffInHours < 24) return `${diffInHours} hrs ago`;
-    const diffInDays = Math.floor(diffInHours / 24);
-    if (diffInDays < 30) return `${diffInDays} days ago`;
-    const diffInMonths = Math.floor(diffInDays / 30);
-    if (diffInMonths < 12) return `${diffInMonths} months ago`;
-    const diffInYears = Math.floor(diffInMonths / 12);
-    return `${diffInYears} years ago`;
+        dispatch(
+          setSingleJob({
+            ...singleJob,
+            applications: [...singleJob.applications, { applicant: user._id }],
+          })
+        );
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
   };
 
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
-        const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
-          withCredentials: true,
-        });
-        
-        console.log("API Response:", res.data);
-
-        if (res.data.success) {
-          console.log("Fetched Job:", res.data.job);
+        const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`);
+        if (res.data?.success) {
           dispatch(setSingleJob(res.data?.job));
         }
       } catch (error) {
         console.log(error);
+        toast.error(error.response?.data?.message);
       }
     };
 
     fetchSingleJob();
-  }, [dispatch, jobId]);
+  }, [jobId, dispatch]);
+
+  useEffect(() => {
+    if (singleJob) {
+      const initialAppliedState = singleJob?.applications.some(
+        (application) => application.applicant === user?._id
+      );
+      setIsApplied(initialAppliedState);
+    }
+  }, [singleJob, user]);
 
   if (!singleJob) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-purple-700" />
+        <Loader2 className="w-10 h-10 animate-spin text-purple-700" /> Loading
+        Details
       </div>
     );
   } else
@@ -82,7 +99,8 @@ const JobDescription = () => {
                 </div>
               </div>
               <Button
-                disabled={isApplied}
+                onClick={applyJobHandler}
+                // disabled={isApplied}
                 className={`w-3/4 sm:w-auto px-6 py-2 text-lg font-semibold rounded-lg 
                 ${
                   isApplied
@@ -135,13 +153,7 @@ const JobDescription = () => {
                   <Calendar className="w-5 h-5 text-gray-600" />
                   <div className="flex max-[300px]:flex-col gap-2">
                     <p className="font-semibold">Posted:</p>
-                    <p className="text-gray-700">
-                      {singleJob?.createdAt ? (
-                        calculateTime()
-                      ) : (
-                        <Loader2 className="w-4 h-4 animate-spin text-gray-600" />
-                      )}
-                    </p>
+                    <p> {singleJob?.createdAt?.split("T")[0]} </p>
                   </div>
                 </div>
 
@@ -156,7 +168,6 @@ const JobDescription = () => {
                 </div>
               </div>
 
-              {/* Job Description */}
               <div className="mt-6 p-4 bg-gray-100 rounded-lg">
                 <p className="text-lg font-semibold border-b pb-2">
                   Job Description
