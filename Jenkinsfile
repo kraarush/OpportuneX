@@ -27,7 +27,7 @@ pipeline {
         stage('Deploy with Docker Compose') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    powershell 'docker-compose up -d'
                 }
             }
         }
@@ -35,8 +35,8 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    sh "curl --silent --fail http://localhost:5173 || exit 1"
-                    sh "curl --silent --fail http://localhost:3000 || exit 1"
+                    powershell "curl --silent --fail http://localhost:5173 || exit 1"
+                    powershell "curl --silent --fail http://localhost:3000 || exit 1"
                 }
             }
         }
