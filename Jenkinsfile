@@ -8,21 +8,21 @@ pipeline {
             }
         }
 
-        stage('Inject Environment Variables') {
-            steps {
-                script {
-                    // Inject frontend .env file
-                    configFileProvider([configFile(fileId: 'frontend-env', variable: 'FRONTEND_ENV')]) {
-                        sh 'echo "$FRONTEND_ENV" > ./Frontend/.env'
-                    }
+        // stage('Inject Environment Variables') {
+        //     steps {
+        //         script {
+        //             // Inject frontend .env file
+        //             configFileProvider([configFile(fileId: 'frontend-env', variable: 'FRONTEND_ENV')]) {
+        //                 sh 'echo "$FRONTEND_ENV" > ./Frontend/.env'
+        //             }
 
-                    // Inject backend .env file
-                    configFileProvider([configFile(fileId: 'backend-env', variable: 'BACKEND_ENV')]) {
-                        sh 'echo "$BACKEND_ENV" > ./Backend/.env'
-                    }
-                }
-            }
-        }
+        //             // Inject backend .env file
+        //             configFileProvider([configFile(fileId: 'backend-env', variable: 'BACKEND_ENV')]) {
+        //                 sh 'echo "$BACKEND_ENV" > ./Backend/.env'
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Deploy with Docker Compose') {
             steps {
