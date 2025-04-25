@@ -61,7 +61,7 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
       toast.error(error.response?.data?.message);
     } finally {
       dispatch(setLoading(false));

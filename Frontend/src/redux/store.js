@@ -8,4 +8,4 @@ export const store = configureStore({
     auth: authSlice,
     job: jobSlice
   },
-})
+});

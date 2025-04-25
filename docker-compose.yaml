@@ -1,0 +1,16 @@
+services:
+  frontend:
+    image: kraarush/opportunex-frontend 
+    env_file:
+      - ./Frontend/.env  
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  backend:
+    image: kraarush/opportunex-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./Backend/.env  
