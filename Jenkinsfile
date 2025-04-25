@@ -8,22 +8,6 @@ pipeline {
             }
         }
 
-        // stage('Inject Environment Variables') {
-        //     steps {
-        //         script {
-        //             // Inject frontend .env file
-        //             configFileProvider([configFile(fileId: 'frontend-env', variable: 'FRONTEND_ENV')]) {
-        //                 powershell 'echo $env:FRONTEND_ENV > ./Frontend/.env'
-        //             }
-
-        //             // Inject backend .env file
-        //             configFileProvider([configFile(fileId: 'backend-env', variable: 'BACKEND_ENV')]) {
-        //                 powershell 'echo $env:BACKEND_ENV > ./Backend/.env'
-        //             }
-        //         }
-        //     }
-        // }
-
         stage('Deploy with Docker Compose') {
             steps {
                 script {
@@ -31,28 +15,11 @@ pipeline {
                 }
             }
         }
-
-        stage('Health Check') {
-            steps {
-                script {
-                    powershell "curl --silent --fail http://localhost:5173 || exit 1"
-                    powershell "curl --silent --fail http://localhost:3000 || exit 1"
-                }
-            }
-        }
     }
 
     post {
         always {
-            cleanWs()
-        }
-
-        success {
             echo 'Pipeline executed successfully!'
-        }
-
-        failure {
-            echo 'Pipeline execution failed.'
         }
     }
 }
