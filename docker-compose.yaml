@@ -1,6 +1,6 @@
 services:
   frontend:
-    build: ./Frontend 
+    image: kraarush/opportunex-frontend
     env_file:
       - ./Frontend/.env  
     ports:
@@ -9,8 +9,8 @@ services:
       - backend
 
   backend:
-    build: ./Backend
+    image: kraarush/opportunex-backend
+    env_file:
+      - ./Backend/.env
     ports:
       - "3000:3000"
-    env_file:
-      - ./Backend/.env  

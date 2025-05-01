@@ -37,5 +37,3 @@ app.listen(PORT, () => {
     connectDB();
     console.log(`Server is live on port: ${PORT}`);
 });
-
-
