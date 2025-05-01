@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
         <div className="mb-4 md:mb-0">
           <h2 className="text-2xl font-bold">
-            Opportune<span className="text-[#F83002]">X</span>
+            Opportune<span className="text-[#F83002]">Aarush</span>
           </h2>
           <p className="text-sm">© {year} OpportuneX. All rights reserved.</p>
           <p className="text-sm text-gray-700">
