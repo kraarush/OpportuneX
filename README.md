@@ -57,112 +57,29 @@ OpportuneX is a **full-stack job portal** built using the **MERN stack**. It ser
 
 ## 📂 Project Structure
 ```
-opportunex/
+Opportunex/
 ├── Backend/
-│   ├── controllers/
-│   │   ├── application.controller.js
-│   │   ├── company-controller.js
-│   │   ├── job.controller.js
-│   │   └── user.controller.js
-│   ├── middlewares/
-│   │   ├── authmiddleware.js
-│   │   ├── authorizeRole.js
-│   │   └── multer.js
-│   ├── models/
-│   │   ├── application.model.js
-│   │   ├── company.model.js
-│   │   ├── job.model.js
-│   │   └── user.model.js
-│   ├── node_modules/
-│   ├── routes/
-│   │   ├── application.route.js
-│   │   ├── company.route.js
-│   │   ├── job.route.js
-│   │   └── user.route.js
-│   ├── utils/
-│   │   ├── cloudinary.js
-│   │   ├── datauri.js
-│   │   ├── db.js
-│   │   └── refinedUser.js
-│   ├── .dockerignore
-│   ├── .env
-│   ├── Dockerfile
-│   ├── index.js
-│   ├── package-lock.json
-│   └── package.json
+│ ├── controllers/
+│ ├── middlewares/
+│ ├── models/
+│ ├── routes/
+│ ├── utils/
+│ ├── Dockerfile
+│ ├── .env
+│ └── index.js
 ├── Frontend/
-│   ├── node_modules/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   │   ├── auth/
-│   │   │   │   ├── Login.jsx
-│   │   │   │   └── Signup.jsx
-│   │   │   ├── routes/
-│   │   │   │   └── appRouter.jsx
-│   │   │   ├── shared/
-│   │   │   │   ├── Footer.jsx
-│   │   │   │   ├── JobCard.jsx
-│   │   │   │   ├── JobDescription.jsx
-│   │   │   │   ├── LatestJobsCard.jsx
-│   │   │   │   ├── Navbar.jsx
-│   │   │   │   └── Typed.jsx
-│   │   │   ├── ui/
-│   │   │   │   ├── avatar.jsx
-│   │   │   │   ├── badge.jsx
-│   │   │   │   ├── button.jsx
-│   │   │   │   ├── carousel.jsx
-│   │   │   │   ├── dialog.jsx
-│   │   │   │   ├── input.jsx
-│   │   │   │   ├── label.jsx
-│   │   │   │   ├── popover.jsx
-│   │   │   │   ├── radio-group.jsx
-│   │   │   │   ├── sonner.jsx
-│   │   │   │   ├── table.jsx
-│   │   │   │   └── tooltip.jsx
-│   │   │   ├── AppliedJobsTable.jsx
-│   │   │   ├── Browse.jsx
-│   │   │   ├── CategoryCarousel.jsx
-│   │   │   ├── FilterCard.jsx
-│   │   │   ├── HeroSection.jsx
-│   │   │   ├── Home.jsx
-│   │   │   ├── Jobs.jsx
-│   │   │   ├── LatestJobs.jsx
-│   │   │   ├── NotFound.jsx
-│   │   │   ├── Profile.jsx
-│   │   │   └── UpdateUserProfile.jsx
-│   │   ├── data/
-│   │   ├── hooks/
-│   │   │   └── useGetAllJobs.jsx
-│   │   ├── lib/
-│   │   ├── redux/
-│   │   │   ├── authSlice.js
-│   │   │   ├── jobSlice.js
-│   │   │   └── store.js
-│   │   ├── utils/
-│   │   │   └── apis.js
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   ├── main.jsx
-│   ├── .dockerignore
-│   ├── .env
-│   ├── .gitignore
-│   ├── components.json
-│   ├── Dockerfile
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── jsconfig.json
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── postcss.config.js
-│   ├── README.md
-│   ├── tailwind.config.js
-│   └── vite.config.js
-├── node_modules/
-├── .gitignore
+│ ├── public/
+│ ├── src/
+│ │ ├── components/
+│ │ ├── redux/
+│ │ ├── hooks/
+│ │ ├── utils/
+│ │ ├── App.jsx
+│ │ └── main.jsx
+│ ├── Dockerfile
+│ ├── .env
+│ └── index.html
 ├── opportunex.yaml
-├── package-lock.json
 ├── package.json
 └── README.md
 
@@ -184,7 +101,7 @@ opportunex/
 4. 🚀 Start the development servers:
    ```sh
    npm run dev  # For frontend
-   node index.js  # For backend
+   npm run dev  # For backend
    ```
 
 ## 🤝 Contribution
