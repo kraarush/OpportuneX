@@ -48,21 +48,41 @@ OpportuneX is a **full-stack job portal** built using the **MERN stack**. It ser
 - 🛠️ Postman (API Testing)
 - 🔗 Git & GitHub (Version Control)
 
+### 🚀 **DevOps**
+- 🐳 **Dockerized Setup**: Both frontend and backend are containerized using Docker.
+- 📦 **Docker Hub Images**:
+  - Frontend: [`kraarush/opportunex-frontend`](https://hub.docker.com/r/kraarush/opportunex-frontend)
+  - Backend: [`kraarush/opportunex-backend`](https://hub.docker.com/r/kraarush/opportunex-backend)
+- 🔄 **CI/CD Pipeline**: Implemented a Jenkins-based CI/CD pipeline that builds, tests, and pushes Docker images automatically to Docker Hub on every update.
+
 ## 📂 Project Structure
 ```
-backend/
-├── controllers/
-├── models/
-├── routes/
-├── middleware/
-├── utils/
-frontend/
-├── src/
-│   ├── components/
-│   │   ├── shared/       # Shared components 
-│   │   ├── auth/         # Authentication pages 
-│   │   ├── routes/       # Route management
-│   ├── redux/
+Opportunex/
+├── Backend/
+│ ├── controllers/
+│ ├── middlewares/
+│ ├── models/
+│ ├── routes/
+│ ├── utils/
+│ ├── Dockerfile
+│ ├── .env
+│ └── index.js
+├── Frontend/
+│ ├── public/
+│ ├── src/
+│ │ ├── components/
+│ │ ├── redux/
+│ │ ├── hooks/
+│ │ ├── utils/
+│ │ ├── App.jsx
+│ │ └── main.jsx
+│ ├── Dockerfile
+│ ├── .env
+│ └── index.html
+├── opportunex.yaml
+├── package.json
+└── README.md
+
 ```
 
 ## 🏗️ Setup & Installation
@@ -81,7 +101,7 @@ frontend/
 4. 🚀 Start the development servers:
    ```sh
    npm run dev  # For frontend
-   node index.js  # For backend
+   npm run dev  # For backend
    ```
 
 ## 🤝 Contribution
