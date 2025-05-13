@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 
 const JobCard = ({ job, className }) => {
+  console.log(job);
   const navigate = useNavigate();
 
   const calculateTime = () => {
