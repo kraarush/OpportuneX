@@ -32,7 +32,7 @@ app.use('/api/v1/job', jobRoutes);
 app.use('/api/v1/application', applicationRoutes);
 
 
-app.listen(PORT, () => {
-    connectDB();
+app.listen(PORT, async () => {
+    await connectDB();
     console.log(`Server is live on port: ${PORT}`);
 });
